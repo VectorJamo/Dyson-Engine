@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_DLL;GLEW_STATIC;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\src;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -109,7 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_DLL;GLEW_STATIC;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName)\src;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)$(ProjectName);$(SolutionDir)$(ProjectName)\src;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,14 +149,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\util\input.cpp" />
+    <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
+    <ClCompile Include="src\graphics\texture.cpp" />
+    <ClCompile Include="src\maths\mat\mat4.cpp" />
+    <ClCompile Include="src\maths\vec\vec2.cpp" />
+    <ClCompile Include="src\maths\vec\vec3.cpp" />
+    <ClCompile Include="src\maths\vec\vec4.cpp" />
+    <ClCompile Include="externals\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\util\input.h" />
+    <ClInclude Include="src\graphics\shader.h" />
     <ClInclude Include="src\core.h" />
     <ClInclude Include="src\engine.h" />
+    <ClInclude Include="src\maths\constants.h" />
+    <ClInclude Include="src\maths\mat\mat4.h" />
+    <ClInclude Include="src\maths\vec\vec2.h" />
+    <ClInclude Include="src\maths\vec\vec3.h" />
+    <ClInclude Include="src\maths\vec\vec4.h" />
     <ClInclude Include="src\util\error_handling.h" />
     <ClInclude Include="src\graphics\window.h" />
     <ClInclude Include="src\entry_point.h" />
+    <ClInclude Include="src\graphics\texture.h" />
+    <ClInclude Include="externals\stb_image\stb_image.h" />
+    <ClInclude Include="src\util\keycodes.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,6 +1,9 @@
 #include <engine.h>
 
+
 using namespace ds;
+using namespace graphics;
+using namespace util;
 
 class Application
 {
@@ -13,5 +16,4 @@ public:
 	void Setup();
 	void Update();
 	void Run();
-
 };

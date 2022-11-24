@@ -1,4 +1,5 @@
 #include "Application.h"
+
 #include <entry_point.h>
 
 Application::Application()
@@ -13,8 +14,9 @@ void Application::Setup()
 		THROW_ERROR("Window initialization failed!");
 	window->SetVSyncEnabled(true);
 
-	// Setup 
-		
+	// Initialize 
+	Input::Init(window);
+
 }
 
 void Application::Update()
@@ -25,7 +27,7 @@ void Application::Update()
 		window->PollEvents();
 
 		// Draw
-
+		
 
 		window->Display();
 	}
@@ -36,4 +38,5 @@ void Application::Run()
 	Setup();
 	Update();
 }
+
 
