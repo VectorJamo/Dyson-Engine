@@ -2,8 +2,7 @@
 
 namespace ds {
 	namespace graphics {
-        int Window::pWidth;
-        int Window::pHeight;
+        int gWidth, gHeight;
         Window::Window(int width, int height, const char* title)
             :pWindow(nullptr), pTitle(title)
         {
@@ -55,10 +54,7 @@ namespace ds {
         }
         void Window::EnableBlend(bool status)
         {
-            if (status)
-                glEnable(GL_BLEND);
-            else
-                glDisable(GL_BLEND);
+            status ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
         }
         void Window::Clear(float r, float g, float b, float a)
         {
@@ -80,8 +76,8 @@ namespace ds {
 
         void Window::framebuffer_size_callback(GLFWwindow* window, int width, int height)
         {
-            pWidth = width;
-            pHeight = height;
+            gWidth = width;
+            gHeight = height;
             glViewport(0, 0, width, height);
         }
 	}

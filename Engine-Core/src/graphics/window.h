@@ -1,17 +1,18 @@
 #pragma once
 #include <iostream>
+#include <core.h>
 
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 namespace ds { 
 	namespace graphics {
-		
-        class Window
+        extern int gWidth, gHeight;
+        class DS Window
         {
         private:
             GLFWwindow* pWindow;
-            static int pWidth, pHeight;
+            int pWidth, pHeight;
             const char* pTitle;
 
         public:
