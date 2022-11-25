@@ -3,7 +3,7 @@
 #include <entry_point.h>
 
 Application::Application()
-	:window(nullptr)
+	:window(nullptr), camera(nullptr), sprite(nullptr)
 {
 }
 
@@ -14,9 +14,15 @@ void Application::Setup()
 		THROW_ERROR("Window initialization failed!");
 	window->SetVSyncEnabled(false);
 
-	// Initialize 
+	// Initialize	
 	Input::Init(window);
-
+	Sprite::Init();
+	
+	camera = new OrthographicCamera(-400.0f, 400.0f, 300.0f, -300.0f, 1.0f, -1.0f);
+	
+	sprite = new Sprite(-100.0f, 100.0f, 200.0f, 200.0f);
+	sprite->SetColor(maths::vec4(1.0f, 0.0f, 0.0f, 1.0f));
+	sprite->SetTexture("res/textures/cute doge.jpeg");
 }
 
 void Application::Update()
@@ -24,15 +30,21 @@ void Application::Update()
 	while (!window->IsClosed())
 	{
 		window->Clear(0.0f, 0.0f, 0.0f, 1.0f);
-		window->PollEvents();
+		HandleInput();
 
 		// Draw
-				
-
-
+		sprite->Draw();
 
 		window->Display();
 	}
+}
+
+void Application::HandleInput()
+{
+	window->PollEvents();
+
+	OrthographicCamera::UpdateControls();
+
 }
 
 void Application::Run()

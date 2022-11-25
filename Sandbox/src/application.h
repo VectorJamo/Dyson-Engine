@@ -8,11 +8,16 @@ class Application
 {
 private:
 	graphics::Window* window;
+	
+	OrthographicCamera* camera;
+
+	Sprite* sprite;
 
 public:
 	Application();
 
 	void Setup();
 	void Update();
+	void HandleInput();
 	void Run();
 };

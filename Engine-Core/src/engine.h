@@ -6,6 +6,7 @@
 #include "graphics/window.h"
 #include "graphics/shader.h"
 #include "graphics/texture.h"
+#include "graphics/primitives.h"
 #include "graphics/data_buffers/vertex_array.h"
 #include "graphics/data_buffers/vertex_buffer.h"
 #include "graphics/data_buffers/index_buffer.h"
@@ -19,3 +20,4 @@
 #include "util/error_handling.h"
 #include "util/input.h"
 #include "util/timer.h"
+#include "util/orthographic_camera.h"

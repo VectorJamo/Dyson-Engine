@@ -13,6 +13,10 @@ namespace ds {
 
 		void Input::Init(graphics::Window* window)
 		{
+			#if _DEBUG
+				std::cout << " -> Input System Initialized!" << std::endl;
+			#endif
+
 			window = window;
 			memset(keys, 0, sizeof(bool) * NUM_KEYS);
 			glfwSetKeyCallback(window->GetWindowObject(), key_callback);

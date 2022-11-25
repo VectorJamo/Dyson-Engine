@@ -110,7 +110,7 @@ namespace ds {
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
-                glUniform2fv(location, 1, &vec.x);
+                glUniform4fv(location, 1, &vec.x);
         }
 
         void Shader::SetUniformMat4f(const char* name, const maths::mat4& matrix)

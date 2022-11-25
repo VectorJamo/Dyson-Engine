@@ -12,7 +12,7 @@
 
 static void ThrowError(const char* message, const char* filePath, int line)
 {
-	std::cout << "||DEBUG ERROR|| : " << message << std::endl;
+	std::cout << "||ERROR|| : " << message << std::endl;
 	std::cout << "Line: " << line << std::endl;
 	std::cout << "File Path: " << filePath << std::endl;
 }
