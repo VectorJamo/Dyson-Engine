@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\data_buffers\index_buffer.cpp" />
     <ClCompile Include="src\util\input.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
@@ -158,8 +159,12 @@
     <ClCompile Include="src\maths\vec\vec3.cpp" />
     <ClCompile Include="src\maths\vec\vec4.cpp" />
     <ClCompile Include="externals\stb_image\stb_image.cpp" />
+    <ClCompile Include="src\util\timer.cpp" />
+    <ClCompile Include="src\graphics\data_buffers\vertex_array.cpp" />
+    <ClCompile Include="src\graphics\data_buffers\vertex_buffer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\data_buffers\index_buffer.h" />
     <ClInclude Include="src\util\input.h" />
     <ClInclude Include="src\graphics\shader.h" />
     <ClInclude Include="src\core.h" />
@@ -175,6 +180,9 @@
     <ClInclude Include="src\graphics\texture.h" />
     <ClInclude Include="externals\stb_image\stb_image.h" />
     <ClInclude Include="src\util\keycodes.h" />
+    <ClInclude Include="src\util\timer.h" />
+    <ClInclude Include="src\graphics\data_buffers\vertex_array.h" />
+    <ClInclude Include="src\graphics\data_buffers\vertex_buffer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

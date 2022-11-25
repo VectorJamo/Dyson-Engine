@@ -12,7 +12,7 @@ void Application::Setup()
 	window = new graphics::Window(800, 600, "Dyson Engine");
 	if (!window->Init())
 		THROW_ERROR("Window initialization failed!");
-	window->SetVSyncEnabled(true);
+	window->SetVSyncEnabled(false);
 
 	// Initialize 
 	Input::Init(window);
@@ -27,7 +27,9 @@ void Application::Update()
 		window->PollEvents();
 
 		// Draw
-		
+				
+
+
 
 		window->Display();
 	}

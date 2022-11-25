@@ -1,5 +1,7 @@
 #include "window.h"
 
+#include "util/timer.h"
+
 namespace ds {
 	namespace graphics {
         int gWidth, gHeight;
@@ -58,6 +60,8 @@ namespace ds {
         }
         void Window::Clear(float r, float g, float b, float a)
         {
+            util::Timer::ResetTimer();
+
             glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
         }
@@ -68,6 +72,8 @@ namespace ds {
         void Window::Display()
         {
             glfwSwapBuffers(pWindow);
+
+            util::Timer::CalculateDeltaTime();
         }
         void Window::SetVSyncEnabled(bool status)
         {
