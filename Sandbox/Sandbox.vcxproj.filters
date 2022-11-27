@@ -28,5 +28,16 @@
     <Image Include="res\textures\cute doge.jpeg">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\tilemap\tiles\block.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\tilemap\tiles\entry door.jfif" />
+    <Image Include="res\tilemap\tiles\exit door.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\tilemap\tiles\wall.jfif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="res\tilemap\map.txt" />
   </ItemGroup>
 </Project>

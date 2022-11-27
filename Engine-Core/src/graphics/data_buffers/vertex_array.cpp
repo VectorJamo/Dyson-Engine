@@ -20,7 +20,7 @@ namespace ds {
 			glBindVertexArray(pVAO);
 		}
 
-		void VertexArray::UnBind()
+		void VertexArray::Unbind()
 		{
 			glBindVertexArray(0);
 		}

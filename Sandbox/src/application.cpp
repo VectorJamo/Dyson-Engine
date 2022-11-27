@@ -3,26 +3,48 @@
 #include <entry_point.h>
 
 Application::Application()
-	:window(nullptr), camera(nullptr), sprite(nullptr)
+	:window(nullptr), camera(nullptr), block(nullptr), wall(nullptr), tilemap(nullptr)
 {
 }
 
 void Application::Setup()
 {
-	window = new graphics::Window(800, 600, "Dyson Engine");
+	window = new graphics::Window(600, 600, "Dyson Engine");
 	if (!window->Init())
 		THROW_ERROR("Window initialization failed!");
 	window->SetVSyncEnabled(false);
 
 	// Initialize	
-	Input::Init(window);
-	Sprite::Init();
+	block = new Texture("res/tilemap/tiles/block.png");
+	wall = new Texture("res/tilemap/tiles/wall.jfif");
+
+	tilemap = new Tilemap("res/tilemap/map.txt", 600, 600, 10, 10);
 	
-	camera = new OrthographicCamera(-400.0f, 400.0f, 300.0f, -300.0f, 1.0f, -1.0f);
-	
-	sprite = new Sprite(-100.0f, 100.0f, 200.0f, 200.0f);
-	sprite->SetColor(maths::vec4(1.0f, 0.0f, 0.0f, 1.0f));
-	sprite->SetTexture("res/textures/cute doge.jpeg");
+	std::vector<Tile*> tileRow;
+	for (int i = 0; i < tilemap->maxTileRows; i++)
+	{
+		for (int j = 0; j < tilemap->maxTilesPerRow; j++)
+		{
+			if (tilemap->tileMap[i * tilemap->maxTilesPerRow + j] == '1')
+			{
+				Tile* tile = new Tile(j * tilemap->tileWidth - 300.0f, 300.0f - i * tilemap->tileHeight, tilemap->tileWidth, tilemap->tileHeight, wall, 1);
+				tilemap->totalTiles++;
+				tileRow.push_back(tile);
+			}
+			else if (tilemap->tileMap[i * tilemap->maxTilesPerRow + j] == '-')
+			{
+				Tile* tile = new Tile(j * tilemap->tileWidth - 300.0f, 300.0f - i * tilemap->tileHeight, tilemap->tileWidth, tilemap->tileHeight, block, 2);
+				tilemap->totalTiles++;
+				tileRow.push_back(tile);
+			}
+		}
+		tilemap->tileSet.push_back(tileRow);
+		tileRow.clear();
+	}
+	std::cout << "total tiles:" << tilemap->totalTiles << std::endl;
+
+	tilemap->AllocateData();
+	tilemap->LoadData();
 }
 
 void Application::Update()
@@ -33,8 +55,8 @@ void Application::Update()
 		HandleInput();
 
 		// Draw
-		sprite->Draw();
-
+		BatchRenderer::Draw(tilemap);
+		
 		window->Display();
 	}
 }

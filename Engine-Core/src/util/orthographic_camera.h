@@ -36,9 +36,10 @@ namespace ds {
 
 		public:
 
-			OrthographicCamera(float left, float right, float top, float bottom, float zNear, float zFar);
+			OrthographicCamera() = delete;
 
 			// Setters
+			static void Init(float left, float right, float top, float bottom, float zNear, float zFar);
 			static void SetPosition(const maths::vec2& pos);
 			static void Rotate(float angle);
 

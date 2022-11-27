@@ -20,12 +20,12 @@ namespace ds {
 		maths::mat4 OrthographicCamera::pCameraRotation;
 		bool OrthographicCamera::IsInitialized = false;
 
-		OrthographicCamera::OrthographicCamera(float left, float right, float top, float bottom, float zNear, float zFar)
+		void OrthographicCamera::Init(float left, float right, float top, float bottom, float zNear, float zFar)
 		{
 			IsInitialized = true;
 
 			#if _DEBUG
-				std::cout << " -> Orthographic Camera Initialized!" << std::endl;
+			std::cout << " -> Orthographic Camera Initialized!" << std::endl;
 			#endif
 
 			pProjectionMatrix = maths::orthographic(left, right, top, bottom, zNear, zFar);

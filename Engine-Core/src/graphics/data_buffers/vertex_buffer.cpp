@@ -4,6 +4,11 @@
 
 namespace ds {
 	namespace graphics {
+		VertexBuffer::VertexBuffer()
+			:pVBO(0), pDataSize(0)
+		{
+			glGenBuffers(1, &pVBO);
+		}
 		VertexBuffer::VertexBuffer(unsigned int dataSize, const void* data)
 			:pVBO(0), pDataSize(dataSize)
 		{
@@ -27,14 +32,18 @@ namespace ds {
 			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 
+		void VertexBuffer::SendData(unsigned int dataSize, const void* data)
+		{
+			glBindBuffer(GL_ARRAY_BUFFER, pVBO);
+			glBufferData(GL_ARRAY_BUFFER, dataSize, data, GL_DYNAMIC_DRAW);
+		}
+
 		void VertexBuffer::SendDataIntoRegion(unsigned int dataOffset, unsigned int dataSize, const void* data)
 		{
 			pDataSize += dataSize;
 
 			glBindBuffer(GL_ARRAY_BUFFER, pVBO);
 			glBufferSubData(GL_ARRAY_BUFFER, dataOffset, dataSize, data);
-
-			glBindBuffer(GL_ARRAY_BUFFER, 0);
 		}
 	}
 }

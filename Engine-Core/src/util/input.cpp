@@ -3,13 +3,13 @@
 namespace ds {
 	namespace util {
 
-		graphics::Window* Input::window;
-		bool Input::keys[NUM_KEYS];
-		bool Input::mouseButtons[NUM_MOUSE_BUTTONS];
-		bool Input::scrollUp;
-		bool Input::scrollDown;
-		maths::vec2 Input::mousePos;
-		maths::vec2 Input::mouseDeltaPos;
+		graphics::Window* Input::pWindow;
+		bool Input::pKeys[NUM_KEYS];
+		bool Input::pMouseButtons[NUM_MOUSE_BUTTONS];
+		bool Input::pScrollUp;
+		bool Input::pScrollDown;
+		maths::vec2 Input::pMousePos;
+		maths::vec2 Input::pMouseDeltaPos;
 
 		void Input::Init(graphics::Window* window)
 		{
@@ -17,8 +17,8 @@ namespace ds {
 				std::cout << " -> Input System Initialized!" << std::endl;
 			#endif
 
-			window = window;
-			memset(keys, 0, sizeof(bool) * NUM_KEYS);
+			pWindow = window;
+			memset(pKeys, 0, sizeof(bool) * NUM_KEYS);
 			glfwSetKeyCallback(window->GetWindowObject(), key_callback);
 
 			glfwSetMouseButtonCallback(window->GetWindowObject(), mouse_button_callback);
@@ -27,23 +27,23 @@ namespace ds {
 
 		bool Input::IsKeyPressed(int keyCode)
 		{
-			if (keys[keyCode])
+			if (pKeys[keyCode])
 			{
-				keys[keyCode] = false;
+				pKeys[keyCode] = false;
 				return true;
 			}
 			return false;
 		}
 		bool Input::IsKeyHold(int keyCode)
 		{
-			return keys[keyCode];
+			return pKeys[keyCode];
 		}
 
 		bool Input::IsMouseButtonPressed(int buttonCode)
 		{
-			if (mouseButtons[buttonCode])
+			if (pMouseButtons[buttonCode])
 			{
-				mouseButtons[buttonCode] = false;
+				pMouseButtons[buttonCode] = false;
 				return true;
 			}
 			return false;
@@ -51,14 +51,14 @@ namespace ds {
 
 		bool Input::IsMouseButtonHold(int buttonCode)
 		{
-			return mouseButtons[buttonCode];
+			return pMouseButtons[buttonCode];
 		}
 
 		bool Input::IsMouseScrollUp()
 		{
-			if (scrollUp)
+			if (pScrollUp)
 			{
-				scrollUp = false;
+				pScrollUp = false;
 				return true;
 			}
 			return false;
@@ -66,9 +66,9 @@ namespace ds {
 
 		bool Input::IsMouseScrollDown()
 		{
-			if (scrollDown)
+			if (pScrollDown)
 			{
-				scrollDown = false;
+				pScrollDown = false;
 				return true;
 			}
 			return false;
@@ -78,40 +78,40 @@ namespace ds {
 		{
 			// Calculate delta mouse posisiton
 			double mouseX, mouseY;
-			glfwGetCursorPos(window->GetWindowObject(), &mouseX, &mouseY);
-			mouseDeltaPos.x = (float)mouseX - mousePos.x;
-			mouseDeltaPos.y = (float)mouseY - mousePos.y;
+			glfwGetCursorPos(pWindow->GetWindowObject(), &mouseX, &mouseY);
+			pMouseDeltaPos.x = (float)mouseX - pMousePos.x;
+			pMouseDeltaPos.y = (float)mouseY - pMousePos.y;
 
-			mousePos.x = (float)mouseX;
-			mousePos.y = (float)mouseY;
+			pMousePos.x = (float)mouseX;
+			pMousePos.y = (float)mouseY;
 		}
 
 		void Input::key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
 			if (action == GLFW_PRESS)
-				keys[key] = true;
+				pKeys[key] = true;
 			if (action == GLFW_RELEASE)
-				keys[key] = false;
+				pKeys[key] = false;
 		}
 		void Input::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 		{
 			if (action == GLFW_PRESS)
-				mouseButtons[button] = true;
+				pMouseButtons[button] = true;
 			if (action == GLFW_RELEASE)
-				mouseButtons[button] = false;
+				pMouseButtons[button] = false;
 		}
 
 		void Input::scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 		{
 			if (yoffset == 1)
 			{
-				scrollUp = true;
-				scrollDown = false;
+				pScrollUp = true;
+				pScrollDown = false;
 			}
 			if (yoffset == -1)
 			{
-				scrollDown = true;
-				scrollUp = false;
+				pScrollDown = true;
+				pScrollUp = false;
 			}
 		}
 	}

@@ -1,6 +1,10 @@
 #include "window.h"
 
 #include "util/timer.h"
+#include "graphics/sprite.h"
+#include "util/input.h"
+#include "graphics/batch_renderer.h"
+#include "util/orthographic_camera.h"
 
 namespace ds {
 	namespace graphics {
@@ -40,6 +44,14 @@ namespace ds {
                 std::cout << "Failed to initialize GLEW!" << std::endl;
                 return false;
             }
+
+            // Initialize the systems
+            util::Input::Init(this);
+            Sprite::Init();
+            BatchRenderer::Init();
+
+            util::OrthographicCamera::Init(-pWidth/2, pWidth/2, pHeight/2, -pHeight/2, 1.0f, -1.0f);
+
             return true;
         }
         bool Window::IsClosed()

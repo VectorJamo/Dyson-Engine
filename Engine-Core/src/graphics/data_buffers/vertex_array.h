@@ -14,7 +14,7 @@ namespace ds {
 			~VertexArray();
 
 			void Bind();
-			void UnBind();
+			void Unbind();
 
 			void PushLayout(int dataType, int dataCount, int stride, int offset);
 

@@ -10,12 +10,14 @@ namespace ds {
 			unsigned int pDataSize;
 
 		public:
+			VertexBuffer();
 			VertexBuffer(unsigned int dataSize, const void* data);
 			~VertexBuffer();
 
 			void Bind();
 			void Unbind();
 
+			void SendData(unsigned int dataSize, const void* data);
 			void SendDataIntoRegion(unsigned int dataOffset, unsigned int dataSize, const void* data);
 		};
 	}

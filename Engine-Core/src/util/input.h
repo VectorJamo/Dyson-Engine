@@ -15,13 +15,13 @@ namespace ds {
 		class DS Input
 		{
 		private:
-			static graphics::Window* window;
-			static bool keys[NUM_KEYS];
-			static bool mouseButtons[NUM_MOUSE_BUTTONS];
-			static bool scrollUp;
-			static bool scrollDown;
-			static maths::vec2 mousePos;
-			static maths::vec2 mouseDeltaPos;
+			static graphics::Window* pWindow;
+			static bool pKeys[NUM_KEYS];
+			static bool pMouseButtons[NUM_MOUSE_BUTTONS];
+			static bool pScrollUp;
+			static bool pScrollDown;
+			static maths::vec2 pMousePos;
+			static maths::vec2 pMouseDeltaPos;
 
 		public:
 			static void Init(graphics::Window* window);
@@ -40,8 +40,8 @@ namespace ds {
 			static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 			static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
-			static inline maths::vec2 GetMousePos() { return mousePos; }
-			static inline maths::vec2 GetMouseDeltaPos() { return mouseDeltaPos; }
+			static inline maths::vec2 GetMousePos() { return pMousePos; }
+			static inline maths::vec2 GetMouseDeltaPos() { return pMouseDeltaPos; }
 		};
 	}
 }

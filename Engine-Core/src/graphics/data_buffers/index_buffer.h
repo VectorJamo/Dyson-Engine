@@ -8,6 +8,7 @@ namespace ds {
 		private:
 			unsigned int pIBO;
 			unsigned int pDataSize;
+			unsigned int pIndicesCount;
 
 		public:
 			IndexBuffer(unsigned int dataSize, const void* data);
@@ -17,6 +18,8 @@ namespace ds {
 			void Unbind();
 
 			void SendDataIntoRegion(unsigned int dataOffset, unsigned int dataSize, const void* data);
+
+			inline unsigned int GetIndiciesCount() { return pIndicesCount; }
 		};
 	}
 }

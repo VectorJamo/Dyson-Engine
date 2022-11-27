@@ -155,8 +155,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\graphics\batch_renderer.cpp" />
     <ClCompile Include="src\graphics\data_buffers\index_buffer.cpp" />
-    <ClCompile Include="src\graphics\primitives.cpp" />
+    <ClCompile Include="src\graphics\sprite.cpp" />
     <ClCompile Include="src\util\input.cpp" />
     <ClCompile Include="src\graphics\shader.cpp" />
     <ClCompile Include="src\graphics\window.cpp" />
@@ -170,10 +171,12 @@
     <ClCompile Include="src\util\timer.cpp" />
     <ClCompile Include="src\graphics\data_buffers\vertex_array.cpp" />
     <ClCompile Include="src\graphics\data_buffers\vertex_buffer.cpp" />
+    <ClCompile Include="src\graphics\tilemap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\graphics\batch_renderer.h" />
     <ClInclude Include="src\graphics\data_buffers\index_buffer.h" />
-    <ClInclude Include="src\graphics\primitives.h" />
+    <ClInclude Include="src\graphics\sprite.h" />
     <ClInclude Include="src\util\input.h" />
     <ClInclude Include="src\graphics\shader.h" />
     <ClInclude Include="src\core.h" />
@@ -193,8 +196,11 @@
     <ClInclude Include="src\util\timer.h" />
     <ClInclude Include="src\graphics\data_buffers\vertex_array.h" />
     <ClInclude Include="src\graphics\data_buffers\vertex_buffer.h" />
+    <ClInclude Include="src\graphics\tilemap.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\shaders\batch_shader\fs.glsl" />
+    <None Include="src\shaders\batch_shader\vs.glsl" />
     <None Include="src\shaders\fs.glsl" />
     <None Include="src\shaders\vs.glsl" />
   </ItemGroup>

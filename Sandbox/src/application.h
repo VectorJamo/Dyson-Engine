@@ -11,7 +11,9 @@ private:
 	
 	OrthographicCamera* camera;
 
-	Sprite* sprite;
+	Texture* block;
+	Texture* wall;
+	Tilemap* tilemap;
 
 public:
 	Application();
