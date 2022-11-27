@@ -3,20 +3,21 @@
 #include <entry_point.h>
 
 Application::Application()
-	:window(nullptr), camera(nullptr), block(nullptr), wall(nullptr), tilemap(nullptr)
+	:window(nullptr), camera(nullptr), block(nullptr), wall(nullptr), entryDoor(nullptr), exitDoor(nullptr), tilemap(nullptr)
 {
 }
 
 void Application::Setup()
 {
 	window = new graphics::Window(600, 600, "Dyson Engine");
-	if (!window->Init())
-		THROW_ERROR("Window initialization failed!");
+	window->Init();
 	window->SetVSyncEnabled(false);
 
 	// Initialize	
 	block = new Texture("res/tilemap/tiles/block.png");
 	wall = new Texture("res/tilemap/tiles/wall.jfif");
+	entryDoor = new Texture("res/tilemap/tiles/entry door.jfif");
+	exitDoor = new Texture("res/tilemap/tiles/exit door.jpg");
 
 	tilemap = new Tilemap("res/tilemap/map.txt", 600, 600, 10, 10);
 	
@@ -27,23 +28,24 @@ void Application::Setup()
 		{
 			if (tilemap->tileMap[i * tilemap->maxTilesPerRow + j] == '1')
 			{
-				Tile* tile = new Tile(j * tilemap->tileWidth - 300.0f, 300.0f - i * tilemap->tileHeight, tilemap->tileWidth, tilemap->tileHeight, wall, 1);
-				tilemap->totalTiles++;
-				tileRow.push_back(tile);
+				tilemap->AddTile(tileRow, i, j, wall, 1);
 			}
 			else if (tilemap->tileMap[i * tilemap->maxTilesPerRow + j] == '-')
 			{
-				Tile* tile = new Tile(j * tilemap->tileWidth - 300.0f, 300.0f - i * tilemap->tileHeight, tilemap->tileWidth, tilemap->tileHeight, block, 2);
-				tilemap->totalTiles++;
-				tileRow.push_back(tile);
+				tilemap->AddTile(tileRow, i, j, block, 2);
+			}
+			else if (tilemap->tileMap[i * tilemap->maxTilesPerRow + j] == 'E')
+			{
+				tilemap->AddTile(tileRow, i, j, entryDoor, 3);
+			}
+			else if (tilemap->tileMap[i * tilemap->maxTilesPerRow + j] == 'D')
+			{
+				tilemap->AddTile(tileRow, i, j, exitDoor, 4);
 			}
 		}
 		tilemap->tileSet.push_back(tileRow);
 		tileRow.clear();
 	}
-	std::cout << "total tiles:" << tilemap->totalTiles << std::endl;
-
-	tilemap->AllocateData();
 	tilemap->LoadData();
 }
 

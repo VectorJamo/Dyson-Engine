@@ -43,21 +43,23 @@ namespace ds {
 		
 		public:
 			std::string tileMap;
-			int tileWidth, tileHeight;
+			int scrWidth, scrHeight, tileWidth, tileHeight;
 			int maxTilesPerRow, maxTileRows;
 			std::vector<std::vector<Tile*>> tileSet;
 			int totalTiles;
 
 		private:
 			void LoadMap();
+			void AllocateData();
 
 		public:
 			Tilemap(const char* filePath, int scrWidth, int scrHeight, int maxTilesPerRow, int maxTileRows);
 			~Tilemap();
 
-			void AllocateData();
+			void AddTile(std::vector<Tile*>& tileRow, int i, int j, Texture* texture, int textureUnit);
 			void LoadData();
 			void BindTextures();
+
 
 			VertexArray* GetVAO() { return pVAO; }
 			IndexBuffer* GetIBO() { return pIBO; }

@@ -19,7 +19,7 @@ namespace ds {
             Window(int width, int height, const char* title);
             ~Window();
 
-            bool Init();
+            void Init();
             bool IsClosed();
             void SetBlendFunction(int srcFactor, int dstFactor);
             void SetBlendEquation(unsigned int mode);

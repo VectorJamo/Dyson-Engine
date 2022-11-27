@@ -32,5 +32,19 @@ namespace ds {
 			glDrawElements(GL_TRIANGLES, map->GetIBO()->GetIndiciesCount(), GL_UNSIGNED_SHORT, 0);
 
 		}
+
+		void BatchRenderer::Draw(Tilemap* map, Shader* shader)
+		{
+			map->BindTextures();
+			map->GetVAO()->Bind();
+			
+			shader->Bind();
+
+			shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
+			shader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
+			shader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+
+			glDrawElements(GL_TRIANGLES, map->GetIBO()->GetIndiciesCount(), GL_UNSIGNED_SHORT, 0);
+		}
 	}
 }

@@ -43,6 +43,7 @@ namespace ds {
 			~Sprite();
 
 			void Draw();
+			void Draw(Shader* shader);
 
 			static void Init();
 

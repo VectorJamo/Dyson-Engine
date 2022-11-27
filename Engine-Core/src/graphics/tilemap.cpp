@@ -10,7 +10,6 @@ namespace ds {
 			:x(x), y(y), width(width), height(height), texture(texture), textureUnit(textureUnit)
 		{
 			ASSERT(textureUnit >= 1);
-
 			SetTextureClipRect(0, 0, texture->GetWidth(), texture->GetHeight());
 		}
 		void Tile::SetTextureClipRect(int x, int y, int width, int height)
@@ -41,7 +40,7 @@ namespace ds {
 			}
 		}
 		Tilemap::Tilemap(const char* filePath, int scrWidth, int scrHeight, int maxTilesPerRow, int maxTileRows)
-			:pFilePath(filePath), totalTiles(0), maxTilesPerRow(maxTilesPerRow), maxTileRows(maxTileRows), pVAO(nullptr), pVBO(nullptr), pIBO(nullptr)
+			:pFilePath(filePath), totalTiles(0), scrWidth(scrWidth), scrHeight(scrHeight), maxTilesPerRow(maxTilesPerRow), maxTileRows(maxTileRows), pVAO(nullptr), pVBO(nullptr), pIBO(nullptr)
 		{
 			tileWidth = scrWidth / maxTilesPerRow;
 			tileHeight = scrHeight / maxTileRows;
@@ -49,7 +48,6 @@ namespace ds {
 			LoadMap();
 
 			tileSet.reserve(maxTileRows);
-
 			memset(activeTextures, 0, sizeof(Texture*) * 32);
 		}
 		void Tilemap::AllocateData()
@@ -81,8 +79,17 @@ namespace ds {
 
 			pVAO->Unbind();
 		}
+		void Tilemap::AddTile(std::vector<Tile*>& tileRow, int i, int j, Texture* texture, int textureUnit)
+		{
+			Tile* tile = new Tile(j * tileWidth - scrWidth/2, scrHeight/2 - i * tileHeight, tileWidth, tileHeight, texture, textureUnit);
+			totalTiles++;
+			tileRow.push_back(tile);
+		}
 		void Tilemap::LoadData()
 		{
+			// Allocate the required memory to store the data first
+			AllocateData();
+
 			int posTextDataOffset = 0;
 			int textIndexDataOffset = 0;
 
@@ -133,9 +140,6 @@ namespace ds {
 					indexDataOffset += sizeof(unsigned short) * 6;
 				}
 			}
-
-			std::cout << pIBO->GetIndiciesCount() << std::endl;
-
 		}
 		void Tilemap::BindTextures()
 		{
@@ -150,10 +154,17 @@ namespace ds {
 		}
 		Tilemap::~Tilemap()
 		{
+			for (auto& tileRow : tileSet)
+			{
+				for (auto* tile : tileRow)
+				{
+					delete tile;
+				}
+			}
+
 			delete pVAO;
 			delete[] pVBO;
 			delete pIBO;
 		}
-
 	}
 }

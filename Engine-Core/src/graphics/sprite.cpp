@@ -86,6 +86,33 @@ namespace ds {
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
         }
 
+        void Sprite::Draw(Shader* shader)
+        {
+            pVAO->Bind();
+
+            shader->Bind();
+
+            // Create the model view matrix
+            pModelView = (pTranslation * util::OrthographicCamera::GetCameraTranslationMatrix()) * (util::OrthographicCamera::GetCameraRotationMatrix() * (pRotation)) * pScale;
+
+            if (pTexture == nullptr)
+            {
+                shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
+                shader->SetUniformMat4f("uModelView", pModelView);
+                shader->SetUniform1i("uUseTexture", 0);
+                shader->SetUniformVec4f("uColor", pColor);
+            }
+            else
+            {
+                shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
+                shader->SetUniformMat4f("uModelView", pModelView);
+                pTexture->Bind(0);
+                shader->SetUniform1i("uUseTexture", 1);
+            }
+
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
+        }
+
         void Sprite::Init()
         {
             #if _DEBUG

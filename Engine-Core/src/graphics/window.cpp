@@ -6,6 +6,8 @@
 #include "graphics/batch_renderer.h"
 #include "util/orthographic_camera.h"
 
+#include "util/error_handling.h"
+
 namespace ds {
 	namespace graphics {
         int gWidth, gHeight;
@@ -20,39 +22,31 @@ namespace ds {
         {
             glfwTerminate();
         }
-        bool Window::Init()
+        void Window::Init()
         {
             if (!glfwInit())
-            {
-                std::cout << "Failed to initialize GLFW!" << std::endl;
-                return false;
-            }
+                THROW_ERROR("Failed to initialize GLFW!");
+
             glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
             glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
             glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
             pWindow = glfwCreateWindow(pWidth, pHeight, pTitle, NULL, NULL);
             if (pWindow == nullptr)
-            {
-                std::cout << "Failed to create GLFW window!" << std::endl;
-                return false;
-            }
+                THROW_ERROR("Failed to create GLFW window!");
+
             glfwMakeContextCurrent(pWindow);
             glfwSetFramebufferSizeCallback(pWindow, framebuffer_size_callback);
+
             if (glewInit() != GLEW_OK)
-            {
-                std::cout << "Failed to initialize GLEW!" << std::endl;
-                return false;
-            }
+                THROW_ERROR("Failed to initialize GLEW!");
 
             // Initialize the systems
             util::Input::Init(this);
             Sprite::Init();
             BatchRenderer::Init();
-
             util::OrthographicCamera::Init(-pWidth/2, pWidth/2, pHeight/2, -pHeight/2, 1.0f, -1.0f);
 
-            return true;
         }
         bool Window::IsClosed()
         {

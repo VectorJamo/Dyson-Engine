@@ -1,6 +1,8 @@
 #include "texture.h"
 #include <externals/stb_image/stb_image.h>
 
+#include "util/error_handling.h"
+
 namespace ds {
 	namespace graphics {
 		Texture::Texture(const std::string& filePath)
@@ -10,7 +12,7 @@ namespace ds {
 			pPixelBuffer = stbi_load(filePath.c_str(), &pWidth, &pHeight, &pChannels, 4);
 
 			if (pPixelBuffer == nullptr)
-				std::cout << "STBI_IMAGE ERROR: Failed to load texture!" << std::endl;
+				THROW_ERROR("STBI_IMAGE ERROR: Failed to load texture!");
 
 			glGenTextures(1, &pTextureID);
 			glBindTexture(GL_TEXTURE_2D, pTextureID);

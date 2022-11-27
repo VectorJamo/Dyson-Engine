@@ -15,7 +15,8 @@ namespace ds {
 		public:
 			static void Init();
 			static void Draw(Tilemap* map);
-		}; 
+			static void Draw(Tilemap* map, Shader* shader);
+		};
 	}
 }
 

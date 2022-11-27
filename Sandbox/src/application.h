@@ -13,6 +13,9 @@ private:
 
 	Texture* block;
 	Texture* wall;
+	Texture* entryDoor;
+	Texture* exitDoor;
+
 	Tilemap* tilemap;
 
 public:
