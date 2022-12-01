@@ -24,14 +24,14 @@ namespace ds {
 		{
 			IsInitialized = true;
 
-			#if _DEBUG
-			std::cout << " -> Orthographic Camera Initialized!" << std::endl;
-			#endif
-
 			pProjectionMatrix = maths::orthographic(left, right, top, bottom, zNear, zFar);
 			pCameraBounds = { left, right, top, bottom, zNear, zFar };
 
 			CreateViewMatrix();
+			
+			#if _DEBUG
+				std::cout << " -> Orthographic Camera Initialized!" << std::endl;
+			#endif
 		}
 
 		void OrthographicCamera::SetPosition(const maths::vec2& pos)

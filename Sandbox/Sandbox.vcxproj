@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_EXE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Externals\Freetype\include;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_EXE;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Externals\Freetype\include;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -171,7 +171,29 @@
     <Image Include="res\tilemap\tiles\wall.jfif" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="res\fonts\Roboto\NOTICE.txt" />
     <Text Include="res\tilemap\map.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\fonts\Roboto\Roboto_Specimen_Book.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\Roboto\Roboto-Black.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Bold.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BoldCondensed.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BoldCondensedItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Condensed.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-CondensedItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Italic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Light.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-LightItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Medium.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Regular.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Thin.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-ThinItalic.ttf" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

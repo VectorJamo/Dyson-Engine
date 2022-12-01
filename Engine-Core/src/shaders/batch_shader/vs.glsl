@@ -4,9 +4,10 @@ layout(location = 0) in vec2 position;
 layout(location = 1) in vec2 textCoord;
 layout(location = 2) in float textIndex;
 
-uniform mat4 uProjection;
 uniform mat4 uCameraTranslation;
 uniform mat4 uCameraRotation;
+
+uniform mat4 uProjection;
 
 out vec2 vTextCoord;
 out float vTextIndex;

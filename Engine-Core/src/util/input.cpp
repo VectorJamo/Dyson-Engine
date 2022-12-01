@@ -13,16 +13,16 @@ namespace ds {
 
 		void Input::Init(graphics::Window* window)
 		{
-			#if _DEBUG
-				std::cout << " -> Input System Initialized!" << std::endl;
-			#endif
-
 			pWindow = window;
 			memset(pKeys, 0, sizeof(bool) * NUM_KEYS);
 			glfwSetKeyCallback(window->GetWindowObject(), key_callback);
 
 			glfwSetMouseButtonCallback(window->GetWindowObject(), mouse_button_callback);
 			glfwSetScrollCallback(window->GetWindowObject(), scroll_callback);
+
+			#if _DEBUG
+				std::cout << " -> Input System Initialized!" << std::endl;
+			#endif
 		}
 
 		bool Input::IsKeyPressed(int keyCode)

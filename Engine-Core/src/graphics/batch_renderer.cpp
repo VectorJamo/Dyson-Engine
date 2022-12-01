@@ -4,10 +4,10 @@
 
 namespace ds {
 	namespace graphics {
-		std::unique_ptr<Shader> BatchRenderer::pShader = nullptr;
+		Shader* BatchRenderer::pShader = nullptr;
 		void BatchRenderer::Init()
 		{
-			pShader = std::make_unique<Shader>("../Engine-Core/src/shaders/batch_shader/vs.glsl", "../Engine-Core/src/shaders/batch_shader/fs.glsl");
+			pShader = new Shader("../Engine-Core/src/shaders/batch_shader/vs.glsl", "../Engine-Core/src/shaders/batch_shader/fs.glsl");
 
 			int textureUnits[32];
 			for (int i = 0; i < 32; i++)
@@ -16,6 +16,15 @@ namespace ds {
 			pShader->Bind();
 			pShader->SetUniform1iv("uTextureUnits", textureUnits, 32);
 			pShader->Unbind();
+
+			#if _DEBUG
+				std::cout << " -> Batch Renderer Initialized!" << std::endl;
+			#endif
+		}
+
+		void BatchRenderer::Free()
+		{
+			delete pShader;
 		}
 
 		void BatchRenderer::Draw(Tilemap* map)
@@ -25,9 +34,9 @@ namespace ds {
 			map->GetVAO()->Bind();
 			pShader->Bind();
 
-			pShader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
 			pShader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
 			pShader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+			pShader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
 
 			glDrawElements(GL_TRIANGLES, map->GetIBO()->GetIndiciesCount(), GL_UNSIGNED_SHORT, 0);
 
@@ -40,9 +49,9 @@ namespace ds {
 			
 			shader->Bind();
 
-			shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
 			shader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
 			shader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+			shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
 
 			glDrawElements(GL_TRIANGLES, map->GetIBO()->GetIndiciesCount(), GL_UNSIGNED_SHORT, 0);
 		}

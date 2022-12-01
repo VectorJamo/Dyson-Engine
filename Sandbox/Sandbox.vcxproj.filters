@@ -39,5 +39,27 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="res\tilemap\map.txt" />
+    <Text Include="res\fonts\Roboto\NOTICE.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\fonts\Roboto\Roboto_Specimen_Book.pdf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="res\fonts\Roboto\Roboto-Black.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BlackItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Bold.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BoldCondensed.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BoldCondensedItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-BoldItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Condensed.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-CondensedItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Italic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Light.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-LightItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Medium.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-MediumItalic.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Regular.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-Thin.ttf" />
+    <Font Include="res\fonts\Roboto\Roboto-ThinItalic.ttf" />
   </ItemGroup>
 </Project>

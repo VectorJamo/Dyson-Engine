@@ -12,8 +12,6 @@
 #include "graphics/data_buffers/vertex_buffer.h"
 #include "graphics/data_buffers/index_buffer.h"
 
-#include <memory>
-
 namespace ds {
 	namespace graphics {
 		class DS Sprite
@@ -24,7 +22,7 @@ namespace ds {
 			VertexBuffer* pVBO;
 			VertexBuffer* pVBO2;
 			IndexBuffer* pIBO;
-			static std::unique_ptr<Shader> pShader;
+			static Shader* pShader;
 
 			Texture* pTexture;
  			// Sprite's transform
@@ -46,6 +44,7 @@ namespace ds {
 			void Draw(Shader* shader);
 
 			static void Init();
+			static void Free();
 
 			// Setters
 			void SetTexture(const char* texturePath);

@@ -8,18 +8,12 @@ class Application
 {
 private:
 	graphics::Window* window;
-	
-	OrthographicCamera* camera;
 
-	Texture* block;
-	Texture* wall;
-	Texture* entryDoor;
-	Texture* exitDoor;
-
-	Tilemap* tilemap;
+	Text* text;
 
 public:
 	Application();
+	~Application();
 
 	void Setup();
 	void Update();

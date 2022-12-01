@@ -10,10 +10,12 @@ namespace ds {
 		class DS BatchRenderer
 		{
 		private:
-			static std::unique_ptr<Shader> pShader;
+			static Shader* pShader;
 	
 		public:
 			static void Init();
+			static void Free();
+
 			static void Draw(Tilemap* map);
 			static void Draw(Tilemap* map, Shader* shader);
 		};

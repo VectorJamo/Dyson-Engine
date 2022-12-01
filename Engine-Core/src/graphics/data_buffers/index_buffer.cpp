@@ -32,7 +32,6 @@ namespace ds {
 
 		void IndexBuffer::SendDataIntoRegion(unsigned int dataOffset, unsigned int dataSize, const void* data)
 		{
-			pDataSize += dataSize;
 			pIndicesCount += dataSize / sizeof(unsigned short);
 
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pIBO);

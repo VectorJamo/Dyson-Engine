@@ -7,6 +7,7 @@
 #include "util/orthographic_camera.h"
 
 #include "util/error_handling.h"
+#include "graphics/text.h"
 
 namespace ds {
 	namespace graphics {
@@ -20,6 +21,10 @@ namespace ds {
 
         Window::~Window()
         {
+            Sprite::Free();
+            BatchRenderer::Free();
+            Text::Free();
+
             glfwTerminate();
         }
         void Window::Init()
@@ -46,6 +51,7 @@ namespace ds {
             Sprite::Init();
             BatchRenderer::Init();
             util::OrthographicCamera::Init(-pWidth/2, pWidth/2, pHeight/2, -pHeight/2, 1.0f, -1.0f);
+            Text::Init();
 
         }
         bool Window::IsClosed()

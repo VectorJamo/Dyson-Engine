@@ -9,6 +9,7 @@
 #include "graphics/sprite.h"
 #include "graphics/tilemap.h"
 #include "graphics/batch_renderer.h"
+#include "graphics/text.h"
 #include "graphics/data_buffers/vertex_array.h"
 #include "graphics/data_buffers/vertex_buffer.h"
 #include "graphics/data_buffers/index_buffer.h"

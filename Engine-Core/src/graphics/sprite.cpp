@@ -4,7 +4,7 @@
 #include "util/error_handling.h"
 namespace ds {
     namespace graphics {
-        std::unique_ptr<Shader> Sprite::pShader = nullptr;
+        Shader* Sprite::pShader = nullptr;
          Sprite::Sprite(int x, int y, int width, int height)
             :pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr)
         {
@@ -65,20 +65,28 @@ namespace ds {
             pVAO->Bind();
 
             pShader->Bind();
-            // Create the model view matrix
-            pModelView = (pTranslation  * util::OrthographicCamera::GetCameraTranslationMatrix()) *  (util::OrthographicCamera::GetCameraRotationMatrix() * (pRotation)) * pScale;
 
             if (pTexture == nullptr)
             {
+                pShader->SetUniformMat4f("uModelScale", pScale);
+                pShader->SetUniformMat4f("uModelRotation", pRotation);
+                pShader->SetUniformMat4f("uModelTranslation", pTranslation);
+                pShader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+                pShader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
                 pShader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
-                pShader->SetUniformMat4f("uModelView", pModelView);
+
                 pShader->SetUniform1i("uUseTexture", 0);
                 pShader->SetUniformVec4f("uColor", pColor);
             }
             else
             {
+                pShader->SetUniformMat4f("uModelScale", pScale);
+                pShader->SetUniformMat4f("uModelRotation", pRotation);
+                pShader->SetUniformMat4f("uModelTranslation", pTranslation);
+                pShader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+                pShader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
                 pShader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
-                pShader->SetUniformMat4f("uModelView", pModelView);
+
                 pTexture->Bind(0);
                 pShader->SetUniform1i("uUseTexture", 1);
             }
@@ -89,23 +97,29 @@ namespace ds {
         void Sprite::Draw(Shader* shader)
         {
             pVAO->Bind();
-
             shader->Bind();
-
-            // Create the model view matrix
-            pModelView = (pTranslation * util::OrthographicCamera::GetCameraTranslationMatrix()) * (util::OrthographicCamera::GetCameraRotationMatrix() * (pRotation)) * pScale;
 
             if (pTexture == nullptr)
             {
+                shader->SetUniformMat4f("uModelScale", pScale);
+                shader->SetUniformMat4f("uModelRotation", pRotation);
+                shader->SetUniformMat4f("uModelTranslation", pTranslation);
+                shader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+                shader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
                 shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
-                shader->SetUniformMat4f("uModelView", pModelView);
+
                 shader->SetUniform1i("uUseTexture", 0);
                 shader->SetUniformVec4f("uColor", pColor);
             }
             else
             {
+                shader->SetUniformMat4f("uModelScale", pScale);
+                shader->SetUniformMat4f("uModelRotation", pRotation);
+                shader->SetUniformMat4f("uModelTranslation", pTranslation);
+                shader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
+                shader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
                 shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
-                shader->SetUniformMat4f("uModelView", pModelView);
+
                 pTexture->Bind(0);
                 shader->SetUniform1i("uUseTexture", 1);
             }
@@ -115,11 +129,16 @@ namespace ds {
 
         void Sprite::Init()
         {
+            pShader = new Shader("../Engine-Core/src/shaders/vs.glsl", "../Engine-Core/src/shaders/fs.glsl");
+
             #if _DEBUG
                 std::cout << " -> Sprite Rendering System Initialized!" << std::endl;
             #endif
+        }
 
-            pShader = std::make_unique<Shader>("../Engine-Core/src/shaders/vs.glsl", "../Engine-Core/src/shaders/fs.glsl");
+        void Sprite::Free()
+        {
+            delete pShader;
         }
 
         void Sprite::SetTexture(const char* texturePath)
@@ -166,9 +185,6 @@ namespace ds {
         void Sprite::SetRotation(const float& angle)
         {
             pRotation = maths::rotate(-TO_RADIANS(angle), maths::vec3(0.0f, 0.0f, 1.0f));
-
-            std::cout << pRotation << std::endl;
-
         }
 
         void Sprite::SetColor(const maths::vec4& color)
