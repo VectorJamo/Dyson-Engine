@@ -3,6 +3,8 @@
 #include <util/orthographic_camera.h>
 #include "maths/constants.h"
 
+#include <GL/glew.h>
+
 namespace ds {
 	namespace graphics {
 		Shader* Text::pShader;
@@ -11,9 +13,13 @@ namespace ds {
 		Text::Text(const char* fontFilePath, unsigned int fontSize)
 			:pVAO(nullptr), pVBO(nullptr), pIBO(nullptr), pScale(1.0f), pRotationAngle(0), pTextLength(0)
 		{
+#if _DEBUG
 			// Load the font
-			if (FT_New_Face(library, fontFilePath, 0, &face))
+			if (FT_New_Face(library, fontFilePath, 0, &face) != 0)
 				THROW_ERROR("Failed to load font!");
+#else 
+			FT_New_Face(library, fontFilePath, 0, &face)
+#endif
 
 			FT_Set_Pixel_Sizes(face, 0, fontSize);
 
@@ -52,9 +58,13 @@ namespace ds {
 
 		void Text::Init()
 		{
+#if _DEBUG
 			// Initialize the freetype library
-			if (FT_Init_FreeType(&library))
+			if (FT_Init_FreeType(&library) != 0)
 				THROW_ERROR("Failed to initialize the FreeType library!");
+#else
+			FT_Init_FreeType(&library)
+#endif
 
 			// Create the font shaders
 			pShader = new Shader("../Engine-Core/src/shaders/font_shader/vs.glsl", "../Engine-Core/src/shaders/font_shader/fs.glsl");
@@ -67,9 +77,9 @@ namespace ds {
 
 			pShader->Unbind();
 
-			#if _DEBUG
-				std::cout << " -> Text Rendering Initialized!" << std::endl;
-			#endif
+#if _DEBUG
+			std::cout << " -> Text Rendering Initialized!" << std::endl;
+#endif
 		}
 
 		void Text::Free()
@@ -81,9 +91,13 @@ namespace ds {
 		{
 			for (int i = 0; i < 128; i++)
 			{
+#if _DEBUG
 				// Load a character from the font as an 8-bit texture
 				if (FT_Load_Char(face, i, FT_LOAD_RENDER) != 0)
 					std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
+#else
+				FT_Load_Char(face, i, FT_LOAD_RENDER)
+#endif
 
 				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 				// Send texture data to the gpu 

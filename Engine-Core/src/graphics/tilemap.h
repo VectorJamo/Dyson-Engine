@@ -1,15 +1,13 @@
 #pragma once
+#include <core.h>
+#include <vector>
+#include <string>
+
+#include "graphics/shader.h"
 #include "graphics/texture.h"
 #include "graphics/data_buffers/vertex_array.h"
 #include "graphics/data_buffers/vertex_buffer.h"
 #include "graphics/data_buffers/index_buffer.h"
-
-#include "graphics/shader.h"
-
-#include "core.h"
-
-#include <vector>
-#include <string>
 
 namespace ds {
 	namespace graphics {

@@ -1,6 +1,7 @@
 #include "batch_renderer.h"
 
 #include "util/orthographic_camera.h"
+#include <GL/glew.h>
 
 namespace ds {
 	namespace graphics {
@@ -17,9 +18,9 @@ namespace ds {
 			pShader->SetUniform1iv("uTextureUnits", textureUnits, 32);
 			pShader->Unbind();
 
-			#if _DEBUG
-				std::cout << " -> Batch Renderer Initialized!" << std::endl;
-			#endif
+#if _DEBUG
+			std::cout << " -> Batch Renderer Initialized!" << std::endl;
+#endif
 		}
 
 		void BatchRenderer::Free()

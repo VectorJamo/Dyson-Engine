@@ -1,8 +1,8 @@
 #include "tilemap.h"
 
-#include "util/error_handling.h"
-
+#include <GL/glew.h>
 #include <fstream>
+#include "util/error_handling.h"
 
 namespace ds {
 	namespace graphics {

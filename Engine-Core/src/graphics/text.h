@@ -1,16 +1,15 @@
 #pragma once
+
 #include <core.h>
-#include <util/error_handling.h>
+#include <freetype/freetype.h>
 #include <array>
 #include <string>
 
+#include "shader.h"
 #include "data_buffers/vertex_array.h"
 #include "data_buffers/vertex_buffer.h"
 #include "data_buffers/index_buffer.h"
-
-#include "shader.h"
-
-#include <freetype/freetype.h>
+#include <util/error_handling.h>
 
 namespace ds {
 	namespace graphics {

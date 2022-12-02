@@ -5,6 +5,7 @@
 Application::Application()
 {
 	window = nullptr;
+	sprite = nullptr;
 }
 
 Application::~Application()
@@ -19,6 +20,10 @@ void Application::Setup()
 	window->SetVSyncEnabled(false);
 
 	// Initialize
+	sprite = new Sprite(0, 0, 100, 100);
+	sprite->SetColor(vec4(1.0f, 0.0f, 1.0f, 1.0f));
+	sprite->SetTexture("res/textures/cute doge.jpeg");
+	sprite->SetColor(vec4(1.0f, 0.0f, 1.0f, 1.0f));
 }
 
 void Application::Update()
@@ -29,7 +34,8 @@ void Application::Update()
 		HandleInput();
 		
 		// Draw
-		window->DrawDot(maths::vec2(0.0f, 0.0f), maths::vec4(1.0f, 0.0f, 1.0f, 1.0f));
+		sprite->Draw();
+
 
 		window->Display();
 	}

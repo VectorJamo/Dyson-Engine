@@ -1,11 +1,10 @@
 #pragma once
+#include <core.h>
+#include <iostream>
+
 #include "util/keycodes.h"
-#include "maths/vec/vec2.h"
-#include "maths/vec/vec4.h"
-#include "maths/mat/mat4.h"
 #include "graphics/window.h"
 
-#include <iostream>
 
 #define NUM_KEYS 350
 #define NUM_MOUSE_BUTTONS 9

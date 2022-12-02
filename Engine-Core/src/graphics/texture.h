@@ -2,9 +2,6 @@
 #include <iostream>
 #include <string>
 
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-
 #include <core.h>
 
 namespace ds {
@@ -19,6 +16,7 @@ namespace ds {
 
 		public:
 			Texture(const std::string& filePath);
+			Texture(unsigned int width, unsigned int height, unsigned char* pixelData);
 			~Texture();
 
 			void Bind(unsigned int slot = 0) const;

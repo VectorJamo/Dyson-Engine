@@ -29,9 +29,9 @@ namespace ds {
 
 			CreateViewMatrix();
 			
-			#if _DEBUG
-				std::cout << " -> Orthographic Camera Initialized!" << std::endl;
-			#endif
+#if _DEBUG
+			std::cout << " -> Orthographic Camera Initialized!" << std::endl;
+#endif
 		}
 
 		void OrthographicCamera::SetPosition(const maths::vec2& pos)

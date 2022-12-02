@@ -15,7 +15,7 @@ namespace ds {
         static unsigned int gWidth, gHeight;
  
         Window::Window(int width, int height, const char* title)
-            :pWindow(nullptr), pTitle(title)
+            :pWindow(nullptr), pTitle(title), pLineVAO(0), pLineVBO(0), pPointVAO(0), pPointVBO(0)
         {
             gWidth = width;
             gHeight = height;

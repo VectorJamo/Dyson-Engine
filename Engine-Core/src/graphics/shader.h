@@ -1,16 +1,10 @@
 #pragma once
-#include <iostream>
+#include <core.h>
 #include <string>
-#include <fstream>
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #include <maths/vec/vec2.h>
 #include <maths/vec/vec4.h>
 #include <maths/mat/mat4.h>
-
-#include <core.h>
 
 namespace ds {
     namespace graphics {

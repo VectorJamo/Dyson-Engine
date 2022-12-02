@@ -1,5 +1,11 @@
 #include "shader.h"
 
+#include <iostream>
+#include <fstream>
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 namespace ds {
     namespace graphics {
         Shader::Shader(const std::string& vsPath, const std::string& fsPath)
@@ -41,6 +47,7 @@ namespace ds {
             glShaderSource(shader, 1, &shaderCode, 0);
             glCompileShader(shader);
 
+#if _DEBUG
             // Error handling
             int status;
             glGetShaderiv(shader, GL_COMPILE_STATUS, &status);
@@ -58,6 +65,10 @@ namespace ds {
             else {
                 return shader;
             }
+#else
+            return shader;
+#endif
+
         }
 
         void Shader::Bind()
@@ -71,55 +82,79 @@ namespace ds {
 
         void Shader::SetUniform1f(const char* name, float value)
         {
+#if _DEBUG
             int location = glGetUniformLocation(pShaderProgram, name);
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
                 glUniform1f(location, value);
+#else
+            glUniform1f(location, value);
+#endif
         }
         void Shader::SetUniform1i(const char* name, int value)
         {
+#if _DEBUG
             int location = glGetUniformLocation(pShaderProgram, name);
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
                 glUniform1i(location, value);
+#else
+            glUniform1i(location, value);
+#endif
         }
 
         void Shader::SetUniform1iv(const char* name, int* value, int dataCount)
         {
+#if _DEBUG
             int location = glGetUniformLocation(pShaderProgram, name);
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
                 glUniform1iv(location, dataCount, value);
+#else
+            glUniform1iv(location, dataCount, value);
+#endif
         }
 
         void Shader::SetUniformVec2f(const char* name, const maths::vec2& vec)
         {
+#if _DEBUG
             int location = glGetUniformLocation(pShaderProgram, name);
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
                 glUniform2fv(location, 1, &vec.x);
+#else
+            glUniform2fv(location, 1, &vec.x);
+#endif
         }
 
         void Shader::SetUniformVec4f(const char* name, const maths::vec4& vec)
         {
+#if _DEBUG
             int location = glGetUniformLocation(pShaderProgram, name);
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
                 glUniform4fv(location, 1, &vec.x);
+#else
+            glUniform4fv(location, 1, &vec.x);
+#endif
         }
 
         void Shader::SetUniformMat4f(const char* name, const maths::mat4& matrix)
         {
+#if _DEBUG
             int location = glGetUniformLocation(pShaderProgram, name);
             if (location < 0)
                 std::cout << "Uniform : " << name << " doesnot exist or is not in use" << std::endl;
             else
                 glUniformMatrix4fv(location, 1, GL_TRUE, &matrix[0][0]);
+#else
+            glUniformMatrix4fv(location, 1, GL_TRUE, &matrix[0][0]);
+#endif
         }
     }
 }
