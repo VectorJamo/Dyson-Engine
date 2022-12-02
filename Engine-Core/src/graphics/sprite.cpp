@@ -129,7 +129,7 @@ namespace ds {
 
         void Sprite::Init()
         {
-            pShader = new Shader("../Engine-Core/src/shaders/vs.glsl", "../Engine-Core/src/shaders/fs.glsl");
+            pShader = new Shader("../Engine-Core/src/shaders/sprite_shader/vs.glsl", "../Engine-Core/src/shaders/sprite_shader/fs.glsl");
 
             #if _DEBUG
                 std::cout << " -> Sprite Rendering System Initialized!" << std::endl;

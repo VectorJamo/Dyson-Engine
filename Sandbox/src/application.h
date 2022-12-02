@@ -9,8 +9,6 @@ class Application
 private:
 	graphics::Window* window;
 
-	Text* text;
-
 public:
 	Application();
 	~Application();

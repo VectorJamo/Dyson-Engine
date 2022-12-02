@@ -201,12 +201,14 @@
     <ClInclude Include="src\graphics\text.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="src\shaders\basic_shader\fs.glsl" />
+    <None Include="src\shaders\basic_shader\vs.glsl" />
     <None Include="src\shaders\batch_shader\fs.glsl" />
     <None Include="src\shaders\batch_shader\vs.glsl" />
     <None Include="src\shaders\font_shader\fs.glsl" />
     <None Include="src\shaders\font_shader\vs.glsl" />
-    <None Include="src\shaders\fs.glsl" />
-    <None Include="src\shaders\vs.glsl" />
+    <None Include="src\shaders\sprite_shader\fs.glsl" />
+    <None Include="src\shaders\sprite_shader\vs.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -60,7 +60,6 @@ namespace ds {
 			void LoadData();
 			void BindTextures();
 
-
 			VertexArray* GetVAO() { return pVAO; }
 			IndexBuffer* GetIBO() { return pIBO; }
 		};

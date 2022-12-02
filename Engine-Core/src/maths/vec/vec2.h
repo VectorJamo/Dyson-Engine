@@ -17,6 +17,7 @@ namespace ds {
 			float GetLength();
 			vec2 GetNormalVector();
 			vec2 Normalize();
+			vec2 GetMidPoint(const vec2& vec) const;
 
 			// Vector arithmetic 
 			vec2 operator+(const vec2& vec);

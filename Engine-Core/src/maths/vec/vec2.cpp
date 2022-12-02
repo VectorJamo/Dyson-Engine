@@ -33,6 +33,14 @@ namespace ds {
 			return *this;
 		}
 
+		vec2 vec2::GetMidPoint(const vec2& vec) const
+		{
+			float midX = (x + vec.x) / 2;
+			float midY = (y + vec.y) / 2;
+
+			return vec2(midX, midY);
+		}
+
 		// Vector arithmetic
 		vec2 vec2::operator+(const vec2& vec)
 		{

@@ -67,9 +67,6 @@ namespace ds {
 
 			pShader->Unbind();
 
-			glEnable(GL_BLEND);
-			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
 			#if _DEBUG
 				std::cout << " -> Text Rendering Initialized!" << std::endl;
 			#endif

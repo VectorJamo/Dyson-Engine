@@ -5,12 +5,10 @@
 Application::Application()
 {
 	window = nullptr;
-	text = nullptr;
 }
 
 Application::~Application()
 {
-	delete text;
 	delete window;
 }
 
@@ -21,12 +19,6 @@ void Application::Setup()
 	window->SetVSyncEnabled(false);
 
 	// Initialize
-	text = new Text("res/fonts/Roboto/Roboto-Regular.ttf", 48);
-	text->SetPosition(0.0f, 0.0f);
-	text->SetText("Hello World!");
-	text->SetColor(1.0f, 0.0f, 0.0f, 1.0f);
-	text->SetScale(0.5f);
-	text->SetRotation(60.0f);
 }
 
 void Application::Update()
@@ -37,8 +29,7 @@ void Application::Update()
 		HandleInput();
 		
 		// Draw
-		text->Render();
-
+		window->DrawDot(maths::vec2(0.0f, 0.0f), maths::vec4(1.0f, 0.0f, 1.0f, 1.0f));
 
 		window->Display();
 	}
