@@ -62,4 +62,13 @@
     <Font Include="res\fonts\Roboto\Roboto-Thin.ttf" />
     <Font Include="res\fonts\Roboto\Roboto-ThinItalic.ttf" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\audio\beat.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="res\audio\high.wav">
+      <Filter>Resource Files</Filter>
+    </Media>
+    <Media Include="res\audio\breakout.mp3" />
+  </ItemGroup>
 </Project>

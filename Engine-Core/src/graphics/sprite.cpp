@@ -8,7 +8,7 @@ namespace ds {
     namespace graphics {
         Shader* Sprite::pShader = nullptr;
          Sprite::Sprite(int x, int y, int width, int height)
-            :pDummyTexture(nullptr), pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr)
+            :pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr)
         {
 #if _DEBUG
             if (!util::OrthographicCamera::IsCameraInitialized())
@@ -30,7 +30,6 @@ namespace ds {
             delete pVBO2;
             delete pIBO;
 
-            delete pDummyTexture;
             if (pTexture != nullptr)
                 delete pTexture;
         }

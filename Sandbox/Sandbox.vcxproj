@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_EXE;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Externals\Freetype\include;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Externals\irrKlang\include;$(SolutionDir)Externals\Freetype\include;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -111,7 +111,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>BUILD_EXE;WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Externals\Freetype\include;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)Externals\irrKlang\include;$(SolutionDir)Externals\Freetype\include;$(SolutionDir)Externals\GLEW\include;$(SolutionDir)Externals\GLFW\include;$(SolutionDir)Engine-Core\src;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -194,6 +194,11 @@
     <Font Include="res\fonts\Roboto\Roboto-Regular.ttf" />
     <Font Include="res\fonts\Roboto\Roboto-Thin.ttf" />
     <Font Include="res\fonts\Roboto\Roboto-ThinItalic.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="res\audio\beat.wav" />
+    <Media Include="res\audio\breakout.mp3" />
+    <Media Include="res\audio\high.wav" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

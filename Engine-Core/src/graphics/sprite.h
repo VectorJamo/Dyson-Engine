@@ -23,7 +23,6 @@ namespace ds {
 			static Shader* pShader;
 
 			bool pUsesTexture;
-			Texture* pDummyTexture;
 			Texture* pTexture;
 			unsigned int pTextureUnit;
 

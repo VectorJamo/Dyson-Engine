@@ -11,6 +11,9 @@ private:
 	graphics::Window* window;
 	
 	Sprite* sprite;
+	
+	Music* music;
+	SoundEffect* sf;
 
 public:
 	Application();

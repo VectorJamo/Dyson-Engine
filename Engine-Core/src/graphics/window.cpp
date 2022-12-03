@@ -8,6 +8,7 @@
 
 #include "util/error_handling.h"
 #include "graphics/text.h"
+#include "util/audio.h"
 
 namespace ds {
 	namespace graphics {
@@ -89,7 +90,7 @@ namespace ds {
             BatchRenderer::Init();
             util::OrthographicCamera::Init(-(int)(gWidth/2), gWidth /2, gHeight/2, -(int)(gHeight/2), 1.0f, -1.0f);
             Text::Init();
-
+            util::Audio::Init();
         }
         bool Window::IsClosed()
         {

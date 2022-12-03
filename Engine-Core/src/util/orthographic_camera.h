@@ -31,6 +31,11 @@ namespace ds {
 
 			static bool IsInitialized;
 
+		public:
+			static bool DisableRotation;
+			static bool DisableZoom;
+			static bool DisableTranslation;
+
 		private:
 			static void CreateViewMatrix();
 

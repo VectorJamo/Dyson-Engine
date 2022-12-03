@@ -20,6 +20,10 @@ namespace ds {
 		maths::mat4 OrthographicCamera::pCameraRotation;
 		bool OrthographicCamera::IsInitialized = false;
 
+		bool OrthographicCamera::DisableRotation = false;
+		bool OrthographicCamera::DisableZoom = false;
+		bool OrthographicCamera::DisableTranslation = false;
+
 		void OrthographicCamera::Init(float left, float right, float top, float bottom, float zNear, float zFar)
 		{
 			IsInitialized = true;
@@ -92,29 +96,37 @@ namespace ds {
 		void OrthographicCamera::UpdateControls()
 		{
 			// Camera controls
-			if (Input::IsKeyHold(DS_KEY_A))
-				pCameraPosition.x -= pCameraSpeed * Timer::GetDeltaTime();
-			if (Input::IsKeyHold(DS_KEY_D))
-				pCameraPosition.x += pCameraSpeed * Timer::GetDeltaTime();
-			if (Input::IsKeyHold(DS_KEY_W))
-				pCameraPosition.y += pCameraSpeed * Timer::GetDeltaTime();
-			if (Input::IsKeyHold(DS_KEY_S))
-				pCameraPosition.y -= pCameraSpeed * Timer::GetDeltaTime();
-
-			if (Input::IsKeyHold(DS_KEY_LEFT))
+			if (!DisableTranslation)
 			{
-				pRotationAngle -= (pCameraRotationSpeed * Timer::GetDeltaTime());
-				Rotate(pRotationAngle);
+				if (Input::IsKeyHold(DS_KEY_A))
+					pCameraPosition.x -= pCameraSpeed * Timer::GetDeltaTime();
+				if (Input::IsKeyHold(DS_KEY_D))
+					pCameraPosition.x += pCameraSpeed * Timer::GetDeltaTime();
+				if (Input::IsKeyHold(DS_KEY_W))
+					pCameraPosition.y += pCameraSpeed * Timer::GetDeltaTime();
+				if (Input::IsKeyHold(DS_KEY_S))
+					pCameraPosition.y -= pCameraSpeed * Timer::GetDeltaTime();
 			}
-			if (Input::IsKeyHold(DS_KEY_RIGHT))
+			if (!DisableRotation)
 			{
-				pRotationAngle += (pCameraRotationSpeed * Timer::GetDeltaTime());
-				Rotate(pRotationAngle);
+				if (Input::IsKeyHold(DS_KEY_LEFT))
+				{
+					pRotationAngle -= (pCameraRotationSpeed * Timer::GetDeltaTime());
+					Rotate(pRotationAngle);
+				}
+				if (Input::IsKeyHold(DS_KEY_RIGHT))
+				{
+					pRotationAngle += (pCameraRotationSpeed * Timer::GetDeltaTime());
+					Rotate(pRotationAngle);
+				}
 			}
-			if (Input::IsMouseScrollUp())
-				ZoomIn();
-			if (Input::IsMouseScrollDown())
-				ZoomOut();
+			if (!DisableZoom)
+			{
+				if (Input::IsMouseScrollUp())
+					ZoomIn();
+				if (Input::IsMouseScrollDown())
+					ZoomOut();
+			}
 
 			// Reset's the camera's transform
 			if (Input::IsKeyHold(DS_KEY_R))
