@@ -17,20 +17,29 @@ void Game::Setup()
 	// This runs once in the beginning
 	window->SetTitle("Game Window");
 
-	sprite = new graphics::Sprite(0.0f, 0.0f, 100.0f, 100.0f);
-	sprite->SetColor(maths::vec4(1.0f, 0.0f, 1.0f, 1.0f));
+	block = new Texture("res/tilemap/tiles/block.png");
+	wall = new Texture("res/tilemap/tiles/wall.jfif");
 
+	sprite = new graphics::Sprite(0.0f, 0.0f, 100.0f, 100.0f);
+	sprite->SetTexture(block);
 }
 
 void Game::Update()
 {
 	// This runs every frame
-	sprite->Draw();
-
 	HandleInput();
+
+	sprite->Draw();
 }
 
 void Game::HandleInput()
 {
-	util::OrthographicCamera::UpdateControls();
+	//util::OrthographicCamera::UpdateControls();
+
+	// Handle user input
+	if (Input::IsKeyPressed(DS_KEY_LEFT))
+		sprite->SetTexture(wall);
+	if (Input::IsKeyPressed(DS_KEY_RIGHT))
+		sprite->SetTexture(block);
+
 }

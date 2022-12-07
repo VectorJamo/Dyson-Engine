@@ -245,6 +245,14 @@ namespace ds {
             pColor = { 1.0f, 1.0f, 1.0f, 1.0f };
         }
 
+        void Sprite::SetTexture(Texture* texture)
+        {
+            pUsesTexture = true;
+
+            pTexture = texture;
+            pColor = { 1.0f, 1.0f, 1.0f, 1.0f };
+        }
+
         void Sprite::SetPosition(float x, float y)
         {
             pPosition = maths::vec2(x, y);

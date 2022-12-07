@@ -22,9 +22,7 @@ void Application::MainLoop()
 		window->Clear();
 		window->PollEvents();
 
-
 		Update();
-
 
 		window->Display();
 	}

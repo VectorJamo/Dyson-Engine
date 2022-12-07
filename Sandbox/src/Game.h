@@ -7,7 +7,9 @@ using namespace util;
 class Game : public Application
 {
 private:
-	graphics::Sprite* sprite;
+	Sprite* sprite;
+
+	Texture* block, *wall;
 
 public:
 	Game();

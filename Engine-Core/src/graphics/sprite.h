@@ -52,6 +52,7 @@ namespace ds {
 
 			// Setters
 			void SetTexture(const char* texturePath);
+			void SetTexture(Texture* texture);
 			void SetPosition(float x, float y);
 			void SetSize(float width, float height);
 			void SetRotation(float angle);
