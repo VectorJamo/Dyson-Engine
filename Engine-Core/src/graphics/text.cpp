@@ -62,6 +62,8 @@ namespace ds {
 			delete pVAO;
 			delete[] pVBO;
 			delete pIBO;
+
+			FT_Done_Face(face);
 		}
 		void Text::Init()
 		{
@@ -143,6 +145,8 @@ namespace ds {
 		void Text::Free()
 		{
 			delete pShader;
+
+			FT_Done_FreeType(library);
 		}
 
 		void Text::LoadCharacters()

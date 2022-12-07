@@ -2,7 +2,8 @@
 
 int main()
 {
-	Application* app = new Application();
-	app->Run();
+	Application* app = new Game();
+	app->MainLoop();
+
 	delete app;
 }

@@ -19,10 +19,11 @@ c:\dev\dyson\bin-interm\engine-core\debug-win32\audio.obj
 c:\dev\dyson\bin-interm\engine-core\debug-win32\sprite.obj
 c:\dev\dyson\bin-interm\engine-core\debug-win32\index_buffer.obj
 c:\dev\dyson\bin-interm\engine-core\debug-win32\batch_renderer.obj
+c:\dev\dyson\bin-interm\engine-core\debug-win32\application.obj
 c:\dev\dyson\bin\engine-core\debug-win32\engine-core.lib
 c:\dev\dyson\bin\engine-core\debug-win32\engine-core.exp
-c:\dev\dyson\bin-interm\engine-core\debug-win32\engine-core.ilk
 c:\dev\dyson\bin\engine-core\debug-win32\engine-core.dll
+c:\dev\dyson\bin-interm\engine-core\debug-win32\engine-core.ilk
 c:\dev\dyson\bin\engine-core\debug-win32\engine-core.pdb
 c:\dev\dyson\bin-interm\engine-core\debug-win32\engine-core.vcxproj.filelistabsolute.txt
 c:\dev\dyson\bin-interm\engine-core\debug-win32\engine-core.tlog\cl.command.1.tlog

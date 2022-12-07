@@ -195,10 +195,10 @@
     <Media Include="res\audio\high.wav" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\Game.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\application.h" />
+    <ClInclude Include="src\Game.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

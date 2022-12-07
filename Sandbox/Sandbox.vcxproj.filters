@@ -62,12 +62,12 @@
     <Media Include="res\audio\breakout.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\application.cpp">
+    <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\application.h">
+    <ClInclude Include="src\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

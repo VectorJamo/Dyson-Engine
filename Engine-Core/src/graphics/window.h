@@ -30,14 +30,17 @@ namespace ds {
             void EnableBlend(bool status);
 
             void PollEvents();
-            void Clear(float r, float g, float b, float a);
+            void Clear();
             void Display();
 
             void DrawLine(const maths::vec2& point1, const maths::vec2& point2, const maths::vec4 color, int rotationAngle);
             void DrawDot(const maths::vec2& point, const maths::vec4& color);
 
             // Setters
+            void SetClearColor(float r, float g, float b, float a);
             void SetVSyncEnabled(bool status);
+            void SetSize(int width, int height);
+            void SetTitle(const char* title);
 
             // Getters
             static unsigned int GetWidth();

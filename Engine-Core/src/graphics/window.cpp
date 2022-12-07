@@ -145,11 +145,10 @@ namespace ds {
         {
             status ? glEnable(GL_BLEND) : glDisable(GL_BLEND);
         }
-        void Window::Clear(float r, float g, float b, float a)
+        void Window::Clear()
         {
             util::Timer::ResetTimer();
 
-            glClearColor(r, g, b, a);
             glClear(GL_COLOR_BUFFER_BIT);
         }
         void Window::PollEvents()
@@ -217,9 +216,26 @@ namespace ds {
             glDrawArrays(GL_POINTS, 0, 1);
         }
 
+        void Window::SetClearColor(float r, float g, float b, float a)
+        {
+            glClearColor(r, g, b, a);
+        }
+
         void Window::SetVSyncEnabled(bool status)
         {
             glfwSwapInterval(status);
+        }
+
+        void Window::SetSize(int width, int height)
+        {
+            glfwSetWindowSize(pWindow, width, height);
+            gWidth = width;
+            gHeight = height;
+        }
+
+        void Window::SetTitle(const char* title)
+        {
+            glfwSetWindowTitle(pWindow, title);
         }
 
         unsigned int Window::GetWidth()

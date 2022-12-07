@@ -18,6 +18,7 @@ c:\dev\dyson\bin-interm\engine-core\release-win32\audio.obj
 c:\dev\dyson\bin-interm\engine-core\release-win32\sprite.obj
 c:\dev\dyson\bin-interm\engine-core\release-win32\index_buffer.obj
 c:\dev\dyson\bin-interm\engine-core\release-win32\batch_renderer.obj
+c:\dev\dyson\bin-interm\engine-core\release-win32\application.obj
 c:\dev\dyson\bin\engine-core\release-win32\engine-core.lib
 c:\dev\dyson\bin\engine-core\release-win32\engine-core.exp
 c:\dev\dyson\bin\engine-core\release-win32\engine-core.dll
