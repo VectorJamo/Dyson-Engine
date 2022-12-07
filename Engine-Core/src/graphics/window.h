@@ -1,21 +1,20 @@
 #pragma once
-#include <core.h>
+#include "../core.h"
 #include <iostream>
-
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
 
 #include "shader.h"
 
-namespace ds { 
-	namespace graphics {
+extern "C" struct GLFWwindow;
+
+namespace ds {
+    namespace graphics {
 
         class DS Window
         {
         private:
             GLFWwindow* pWindow;
             const char* pTitle;
-                
+
             unsigned int pLineVAO, pLineVBO;
             unsigned int pPointVAO, pPointVBO;
             static Shader* pShader;
@@ -48,5 +47,5 @@ namespace ds {
             static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
         };
 
-	}
+    }
 }

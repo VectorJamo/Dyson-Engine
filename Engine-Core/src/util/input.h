@@ -1,10 +1,7 @@
 #pragma once
-#include <core.h>
-#include <iostream>
-
-#include "util/keycodes.h"
-#include "graphics/window.h"
-
+#include "../core.h"
+ #include "keycodes.h"
+#include "../graphics/window.h"
 
 #define NUM_KEYS 350
 #define NUM_MOUSE_BUTTONS 9

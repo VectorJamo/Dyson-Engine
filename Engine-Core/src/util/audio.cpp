@@ -1,5 +1,7 @@
 #include "audio.h"
 
+#include <irrKlang.h>
+
 namespace ds {
 	namespace util {
 
@@ -15,11 +17,10 @@ namespace ds {
 		}
 
 
-
-		Music::Music(const std::string& filePath)
+		Music::Music(const char* filePath)
 			:pSource(nullptr), pSound(nullptr), pIsMusicBeingPlayed(false)
 		{
-			pSource = gSoundEngine->addSoundSourceFromFile(filePath.c_str());
+			pSource = gSoundEngine->addSoundSourceFromFile(filePath);
 		}
 
 		Music::~Music()
@@ -78,10 +79,10 @@ namespace ds {
 		}
 
 
-		SoundEffect::SoundEffect(const std::string& filePath)
+		SoundEffect::SoundEffect(const char* filePath)
 			:pSource(nullptr), pSound(nullptr)
 		{
-			pSource = gSoundEngine->addSoundSourceFromFile(filePath.c_str());
+			pSource = gSoundEngine->addSoundSourceFromFile(filePath);
 		}
 
 		SoundEffect::~SoundEffect()

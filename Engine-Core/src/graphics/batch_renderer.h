@@ -1,7 +1,7 @@
 #pragma once
 
-#include "graphics/shader.h"
-#include "graphics/tilemap.h"
+#include "shader.h"
+#include "tilemap.h"
 
 #include <memory>
 

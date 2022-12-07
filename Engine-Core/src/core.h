@@ -2,6 +2,6 @@
 
 #ifdef BUILD_DLL
 	#define DS __declspec(dllexport)
-#elif defined BUILD_EXE
+#else
 	#define DS __declspec(dllimport)
 #endif

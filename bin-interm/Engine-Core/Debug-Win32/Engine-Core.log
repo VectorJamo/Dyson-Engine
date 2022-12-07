@@ -1,1 +1,59 @@
-﻿
+﻿  text.cpp
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(15,25): warning C4251: 'ds::graphics::Shader::pVertexShaderPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(15,44): warning C4251: 'ds::graphics::Shader::pFragmentShaderPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(16,25): warning C4251: 'ds::graphics::Shader::pVertexShaderCode': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(16,44): warning C4251: 'ds::graphics::Shader::pFragmentShaderCode': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(185,103): warning C4838: conversion from 'unsigned int' to 'int' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(185,130): warning C4838: conversion from 'unsigned int' to 'int' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(222,18): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(235,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(236,20): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(237,24): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(238,25): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(269,37): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(269,54): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(269,71): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(269,88): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(269,105): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(269,122): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\text.cpp(336,30): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  tilemap.cpp
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(15,25): warning C4251: 'ds::graphics::Shader::pVertexShaderPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(15,44): warning C4251: 'ds::graphics::Shader::pFragmentShaderPath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(16,25): warning C4251: 'ds::graphics::Shader::pVertexShaderCode': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\shader.h(16,44): warning C4251: 'ds::graphics::Shader::pFragmentShaderCode': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Shader'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\texture.h(13,16): warning C4251: 'ds::graphics::Texture::pTexturePath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Texture'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.h(34,16): warning C4251: 'ds::graphics::Tilemap::pFilePath': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Tilemap'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.h(43,16): warning C4251: 'ds::graphics::Tilemap::tileMap': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Tilemap'
+C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.31.31103\include\xstring(4927): message : see declaration of 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>'
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.h(46,36): warning C4251: 'ds::graphics::Tilemap::tileSet': class 'std::vector<std::vector<ds::graphics::Tile *,std::allocator<ds::graphics::Tile *>>,std::allocator<std::vector<ds::graphics::Tile *,std::allocator<ds::graphics::Tile *>>>>' needs to have dll-interface to be used by clients of class 'ds::graphics::Tilemap'
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.h(46): message : see declaration of 'std::vector<std::vector<ds::graphics::Tile *,std::allocator<ds::graphics::Tile *>>,std::allocator<std::vector<ds::graphics::Tile *,std::allocator<ds::graphics::Tile *>>>>'
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(35,23): warning C4018: '<': signed/unsigned mismatch
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(50,20): warning C4244: 'argument': conversion from 'float' to 'const unsigned int', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(115,11): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(115,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(116,11): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(116,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(117,11): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(117,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(118,11): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(118,11): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(124,38): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(124,55): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(124,72): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(124,89): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(124,106): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+C:\dev\Dyson\Engine-Core\src\graphics\tilemap.cpp(124,123): warning C4838: conversion from 'int' to 'unsigned short' requires a narrowing conversion
+  Generating Code...
+  Engine-Core.vcxproj -> C:\dev\Dyson\bin\Engine-Core\Debug-Win32\Engine-Core.dll
+          1 file(s) copied.

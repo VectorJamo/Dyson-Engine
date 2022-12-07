@@ -20,10 +20,9 @@ void Application::Setup()
 	window->SetVSyncEnabled(false);
 
 	// Initialize
-	sprite = new Sprite(0, 0, 100, 100);
-	sprite->SetColor(vec4(1.0f, 0.0f, 1.0f, 1.0f));
+	sprite = new Sprite(0.0f, 0.0f, 100.0f, 100.0f);
 	sprite->SetTexture("res/textures/cute doge.jpeg");
-	sprite->SetColor(vec4(1.0f, 0.0f, 1.0f, 1.0f));
+	sprite->SetPosition(-400.0f, 300.0f);
 
 	music = new Music("res/audio/breakout.mp3");
 	music->SetDefaultVolume(0.8f);
@@ -61,6 +60,10 @@ void Application::HandleInput()
 	{
 		sf->Play();
 	}
+
+	if (Input::IsMouseButtonPressed(DS_MOUSE_BUTTON_LEFT))
+		std::cout << "LEFT" << std::endl;
+
 }
 
 void Application::Run()

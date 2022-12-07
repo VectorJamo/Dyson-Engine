@@ -1,8 +1,8 @@
 #pragma once
 
 #include <iostream>
-#include <cmath>
-#include <core.h>
+#include "../../core.h"
+
 namespace ds {
 	namespace maths {
 		struct DS vec4

@@ -1,13 +1,13 @@
 #pragma once
-#include <core.h>
+#include "../core.h"
 #include <vector>
 #include <string>
 
-#include "graphics/shader.h"
-#include "graphics/texture.h"
-#include "graphics/data_buffers/vertex_array.h"
-#include "graphics/data_buffers/vertex_buffer.h"
-#include "graphics/data_buffers/index_buffer.h"
+#include "shader.h"
+#include "texture.h"
+#include "data_buffers/vertex_array.h"
+#include "data_buffers/vertex_buffer.h"
+#include "data_buffers/index_buffer.h"
 
 namespace ds {
 	namespace graphics {
@@ -17,13 +17,13 @@ namespace ds {
 
 		struct DS Tile
 		{
-			int x, y, width, height;
+			float x, y, width, height;
 			Texture* texture;
-			
+
 			int textureUnit;
 			float textCoords[8];
 
-			Tile(int x, int y, int width, int height, Texture* texture, int textureUnit);
+			Tile(float x, float y, float width, float height, Texture* texture, int textureUnit);
 
 			void SetTextureClipRect(int x, int y, int width, int height);
 		};
@@ -38,11 +38,11 @@ namespace ds {
 			VertexArray* pVAO;
 			VertexBuffer* pVBO;
 			IndexBuffer* pIBO;
-		
+
 		public:
 			std::string tileMap;
-			int scrWidth, scrHeight, tileWidth, tileHeight;
-			int maxTilesPerRow, maxTileRows;
+			float scrWidth, scrHeight, tileWidth, tileHeight;
+			float maxTilesPerRow, maxTileRows;
 			std::vector<std::vector<Tile*>> tileSet;
 			int totalTiles;
 
@@ -51,7 +51,7 @@ namespace ds {
 			void AllocateData();
 
 		public:
-			Tilemap(const char* filePath, int scrWidth, int scrHeight, int maxTilesPerRow, int maxTileRows);
+			Tilemap(const char* filePath, float scrWidth, float scrHeight, float maxTilesPerRow, float maxTileRows);
 			~Tilemap();
 
 			void AddTile(std::vector<Tile*>& tileRow, int i, int j, Texture* texture, int textureUnit);

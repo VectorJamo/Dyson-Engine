@@ -158,12 +158,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\application.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="src\application.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="res\textures\cute doge.jpeg" />
     <Image Include="res\tilemap\tiles\block.png" />
     <Image Include="res\tilemap\tiles\entry door.jfif" />
@@ -199,6 +193,12 @@
     <Media Include="res\audio\beat.wav" />
     <Media Include="res\audio\breakout.mp3" />
     <Media Include="res\audio\high.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\application.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\application.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -1,4 +1,7 @@
 #include "mat4.h"
+
+#include <cmath>
+
 namespace ds {
 	namespace maths {
 		mat4::mat4(float diagonal)

@@ -1,4 +1,5 @@
 #include "text.h"
+#include <freetype/freetype.h>
 
 #include <util/orthographic_camera.h>
 #include "maths/constants.h"
@@ -14,11 +15,12 @@ namespace ds {
 			:pVAO(nullptr), pVBO(nullptr), pIBO(nullptr), pScale(1.0f), pRotationAngle(0), pTextLength(0)
 		{
 #if _DEBUG
+
 			// Load the font
 			if (FT_New_Face(library, fontFilePath, 0, &face) != 0)
 				THROW_ERROR("Failed to load font!");
 #else 
-			FT_New_Face(library, fontFilePath, 0, &face)
+			FT_New_Face(library, fontFilePath, 0, &face);
 #endif
 
 			FT_Set_Pixel_Sizes(face, 0, fontSize);
@@ -55,7 +57,12 @@ namespace ds {
 
 			LoadCharacters();
 		}
-
+		Text::~Text()
+		{
+			delete pVAO;
+			delete[] pVBO;
+			delete pIBO;
+		}
 		void Text::Init()
 		{
 #if _DEBUG
@@ -63,11 +70,62 @@ namespace ds {
 			if (FT_Init_FreeType(&library) != 0)
 				THROW_ERROR("Failed to initialize the FreeType library!");
 #else
-			FT_Init_FreeType(&library)
+			FT_Init_FreeType(&library);
 #endif
 
 			// Create the font shaders
-			pShader = new Shader("../Engine-Core/src/shaders/font_shader/vs.glsl", "../Engine-Core/src/shaders/font_shader/fs.glsl");
+			const char* vsCode = R"(
+				#version 330 core
+				
+				layout(location = 0) in vec2 position;
+				layout(location = 1) in vec2 textCoord;
+				layout(location = 2) in float textUnit;
+				
+				uniform mat4 uModelTranslation;
+				uniform mat4 uModelScale;
+				uniform mat4 uModelRotation;
+				
+				uniform mat4 uCameraTranslation;
+				uniform mat4 uCameraRotation;
+				
+				uniform mat4 uProjection;
+				
+				out vec2 vTextCoord;
+				out float vTextUnit;
+				
+				void main()
+				{
+					mat4 scale = uModelScale;
+					mat4 rotation = uModelRotation * uCameraRotation;
+					mat4 translation = uModelTranslation * uCameraTranslation;
+				
+					gl_Position =  uProjection * translation * rotation * scale * vec4(position.x, position.y, 0.0f, 1.0f);
+					vTextCoord = textCoord;
+					vTextUnit = textUnit;
+				}
+			)";
+
+			const char* fsCode = R"(
+				#version 330 core
+				
+				out vec4 uFragColor;
+				
+				in vec2 vTextCoord;
+				in float vTextUnit;
+				
+				uniform vec4 uColor;
+				uniform sampler2D uTextureUnits[32];
+				
+				void main()
+				{
+					int textureUnit = int(vTextUnit);
+				
+					vec4 sampled = vec4(1.0f, 1.0f, 1.0f, texture(uTextureUnits[textureUnit], vTextCoord).r);
+					uFragColor = uColor * sampled;
+				}
+			)";
+
+			pShader = new Shader(vsCode, fsCode, true);
 			pShader->Bind();
 
 			int textureUnits[32];
@@ -96,7 +154,7 @@ namespace ds {
 				if (FT_Load_Char(face, i, FT_LOAD_RENDER) != 0)
 					std::cout << "ERROR::FREETYTPE: Failed to load Glyph" << std::endl;
 #else
-				FT_Load_Char(face, i, FT_LOAD_RENDER)
+				FT_Load_Char(face, i, FT_LOAD_RENDER);
 #endif
 
 				glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -129,8 +187,30 @@ namespace ds {
 			}
 		}
 
-		void Text::SetText(const std::string& text)
-		{	
+		void Text::SetText(const char* string)
+		{
+			// Clear the buffers with previous text's data
+			pVAO->Bind();
+
+			pVBO[POS_BUFFER].Bind();
+			pVBO[POS_BUFFER].SendData(sizeof(float) * 8 * 32, 0);
+
+			pVBO[TCOORD_BUFFER].Bind();
+			pVBO[TCOORD_BUFFER].SendData(sizeof(float) * 8 * 32, 0);
+
+			pVBO[TINDEX_BUFFER].Bind();
+			pVBO[TINDEX_BUFFER].SendData(sizeof(float) * 4 * 32, 0);
+
+			pIBO->Bind();
+			pIBO->SendDataIntoRegion(0, sizeof(unsigned short) * 6 * 32, 0);
+
+			memset(pTextureUnits, 0, sizeof(Character) * 32);
+
+			std::string text = string;
+			pTextLength = 0;
+			pTextSize.x = 0.0f;
+			pTextSize.y = 0.0f;
+
 			// First, calculate the total width and the height of the text
 			int maxHeight = 0;
 			for (char ch : text)
@@ -147,7 +227,7 @@ namespace ds {
 			int vertexDataOffset = 0;
 			int textIndexDataOffset = 0;
 			int indexDataOffset = 0;
-			int indexOffset = 0;
+			short indexOffset = 0;
 
 			// Create the quads to render text to
 			for (char ch : text)
@@ -164,8 +244,8 @@ namespace ds {
 
 				float positions[8] =
 				{
-					bottomLeft.x + totalXOffset,						bottomLeft.y - totalYOffset,		
-					bottomLeft.x + totalXOffset + textureWidth,			bottomLeft.y - totalYOffset,		
+					bottomLeft.x + totalXOffset,						bottomLeft.y - totalYOffset,
+					bottomLeft.x + totalXOffset + textureWidth,			bottomLeft.y - totalYOffset,
 					bottomLeft.x + totalXOffset + textureWidth,			bottomLeft.y - totalYOffset + textureHeight,
 					bottomLeft.x + totalXOffset,						bottomLeft.y - totalYOffset + textureHeight,
 				};
@@ -180,13 +260,13 @@ namespace ds {
 
 				float textUnit[4] =
 				{
-					(float)textureUnit, 
-					(float)textureUnit, 
-					(float)textureUnit, 
+					(float)textureUnit,
+					(float)textureUnit,
+					(float)textureUnit,
 					(float)textureUnit
 				};
 
-				unsigned short indices[6] = { 0 + indexOffset, 1 + indexOffset, 2 + indexOffset, 2 + indexOffset, 3 + indexOffset, 0 + indexOffset};
+				unsigned short indices[6] = { 0 + indexOffset, 1 + indexOffset, 2 + indexOffset, 2 + indexOffset, 3 + indexOffset, 0 + indexOffset };
 
 				pVBO[POS_BUFFER].Bind();
 				pVBO[POS_BUFFER].SendDataIntoRegion(vertexDataOffset, sizeof(float) * 8, positions);
@@ -202,7 +282,7 @@ namespace ds {
 				pTextureUnits[textureUnit] = pCharacters[ch];
 				textureUnit++;
 
-				advance += (pCharacters[ch].advance >> 6); 
+				advance += (pCharacters[ch].advance >> 6);
 
 				vertexDataOffset += sizeof(float) * 8;
 				textIndexDataOffset += sizeof(float) * 4;
@@ -212,6 +292,8 @@ namespace ds {
 			}
 			pTextSize.x = pTextSize.x * pScale;
 			pTextSize.y = pTextSize.y * pScale;
+
+			pVAO->Unbind();
 		}
 		void Text::SetPosition(float x, float y)
 		{
@@ -220,7 +302,7 @@ namespace ds {
 		void Text::SetScale(float scale)
 		{
 			pScale = scale;
-			
+
 			pTextSize.x = pTextSize.x * scale;
 			pTextSize.y = pTextSize.y * scale;
 		}
@@ -240,14 +322,14 @@ namespace ds {
 				glBindTexture(GL_TEXTURE_2D, pTextureUnits[i].textureID);
 			}
 		}
-		 
+
 		void Text::Render()
 		{
 			BindTextures();
 			pVAO->Bind();
 			pShader->Bind();
 
-			pTranslation = maths::translate(maths::vec3(pPosition.x + pTextSize.x/2, pPosition.y - pTextSize.y / 2, 0.0f));
+			pTranslation = maths::translate(maths::vec3(pPosition.x + (pTextSize.x / 2) * pScale, pPosition.y - (pTextSize.y / 2) * pScale, 0.0f));
 			pScaleMat = maths::scale(maths::vec3(pScale, pScale, 1.0f));
 			pRotation = maths::rotate(-TO_RADIANS(pRotationAngle), maths::vec3(0.0f, 0.0f, 1.0f));
 
@@ -261,6 +343,8 @@ namespace ds {
 			pShader->SetUniformVec4f("uColor", pColor);
 
 			glDrawElements(GL_TRIANGLES, pIBO->GetIndiciesCount(), GL_UNSIGNED_SHORT, 0);
+
+			pVAO->Unbind();
 		}
 	}
 }

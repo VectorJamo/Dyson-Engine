@@ -1,7 +1,6 @@
 #pragma once
 
-#include <core.h>
-#include <freetype/freetype.h>
+#include "../core.h"
 #include <array>
 #include <string>
 
@@ -9,7 +8,10 @@
 #include "data_buffers/vertex_array.h"
 #include "data_buffers/vertex_buffer.h"
 #include "data_buffers/index_buffer.h"
-#include <util/error_handling.h>
+#include "../util/error_handling.h"
+
+extern "C" typedef struct FT_FaceRec_* FT_Face;
+extern "C" typedef struct FT_LibraryRec_* FT_Library;
 
 namespace ds {
 	namespace graphics {
@@ -21,9 +23,9 @@ namespace ds {
 		{
 			unsigned int textureID;
 
-			unsigned int bearingX, bearingY;
-			unsigned int width, height;
-			unsigned int advance;
+			int bearingX, bearingY;
+			int width, height;
+			int advance;
 		};
 
 		class DS Text
@@ -53,12 +55,13 @@ namespace ds {
 
 		public:
 			Text(const char* fontFilePath, unsigned int fontSize);
-			
+			~Text();
+
 			static void Init();
 			static void Free();
 
 			void LoadCharacters();
-			void SetText(const std::string& text);
+			void SetText(const char* string);
 			void SetPosition(float x, float y);
 			void SetScale(float scale);
 			void SetRotation(float angle);

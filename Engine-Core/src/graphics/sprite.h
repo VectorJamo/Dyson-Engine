@@ -3,11 +3,11 @@
 #include "shader.h"
 #include "texture.h"
 
-#include "maths/constants.h"
+#include "../maths/constants.h"
 
-#include "graphics/data_buffers/vertex_array.h"
-#include "graphics/data_buffers/vertex_buffer.h"
-#include "graphics/data_buffers/index_buffer.h"
+#include "data_buffers/vertex_array.h"
+#include "data_buffers/vertex_buffer.h"
+#include "data_buffers/index_buffer.h"
 
 #include "tilemap.h"
 namespace ds {
@@ -37,7 +37,7 @@ namespace ds {
 			void CreateRect();
 
 		public:
-			Sprite(int x, int y, int width, int height);
+			Sprite(float x, float y, float width, float height);
 			~Sprite();
 
 			void Draw();
@@ -48,13 +48,13 @@ namespace ds {
 
 			bool IsCollided(const Sprite* sprite);
 			bool IsCollided(const Tile* tile);
-			bool IsCollided(const Tile* tile, int& dx, int& dy);
+			bool IsCollided(const Tile* tile, float& dx, float& dy);
 
 			// Setters
 			void SetTexture(const char* texturePath);
-			void SetPosition(const maths::vec2& pos);
-			void SetSize(const maths::vec2& size);
-			void SetRotation(const float& angle);
+			void SetPosition(float x, float y);
+			void SetSize(float width, float height);
+			void SetRotation(float angle);
 			void SetColor(const maths::vec4& color);
 			void SetTextureClipRect(int x, int y, int width, int height);
 

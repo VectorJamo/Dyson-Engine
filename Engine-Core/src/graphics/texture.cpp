@@ -8,11 +8,11 @@
 
 namespace ds {
 	namespace graphics {
-		Texture::Texture(const std::string& filePath)
+		Texture::Texture(const char* filePath)
 			:pTextureID(0), pTexturePath(filePath), pPixelBuffer(nullptr), pWidth(0), pHeight(0), pChannels(0)
 		{
 			stbi_set_flip_vertically_on_load(1);
-			pPixelBuffer = stbi_load(filePath.c_str(), &pWidth, &pHeight, &pChannels, 4);
+			pPixelBuffer = stbi_load(filePath, &pWidth, &pHeight, &pChannels, 4);
 #if _DEBUG
 			if (pPixelBuffer == nullptr)
 				THROW_ERROR("STBI_IMAGE ERROR: Failed to load texture!");

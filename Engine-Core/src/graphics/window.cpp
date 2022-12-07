@@ -10,11 +10,14 @@
 #include "graphics/text.h"
 #include "util/audio.h"
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 namespace ds {
-	namespace graphics {
+    namespace graphics {
         Shader* Window::pShader;
         static unsigned int gWidth, gHeight;
- 
+
         Window::Window(int width, int height, const char* title)
             :pWindow(nullptr), pTitle(title), pLineVAO(0), pLineVBO(0), pPointVAO(0), pPointVBO(0)
         {
@@ -82,13 +85,47 @@ namespace ds {
             glBindVertexArray(0);
             glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-            pShader = new Shader("../Engine-Core/src/shaders/basic_shader/vs.glsl", "../Engine-Core/src/shaders/basic_shader/fs.glsl");
+            // Create the shaders
+            const char* vsCode = R"(
+                #version 330 core
+                
+                layout(location = 0) in vec2 position;
+                
+                uniform mat4 uTranslationToOrigin;
+                uniform mat4 uTranslationToOriginal;
+                
+                uniform mat4 uRotation;
+                
+                uniform mat4 uCameraTranslation;
+                uniform mat4 uCameraRotation;
+                
+                uniform mat4 uProjection;
+                
+                void main()
+                {
+                	gl_Position =  uProjection * uCameraTranslation * uTranslationToOriginal * uCameraRotation * uRotation * uTranslationToOrigin * vec4(position.x, position.y, 0.0f, 1.0f);
+                }
+            )";
+            const char* fsCode = R"(
+                #version 330 core
+                
+                out vec4 fragColor;
+                
+                uniform vec4 uColor;
+                
+                void main()
+                {
+                	fragColor = uColor;
+                }
+            )";
+
+            pShader = new Shader(vsCode, fsCode, true);
 
             // Initialize the systems
             util::Input::Init(this);
             Sprite::Init();
             BatchRenderer::Init();
-            util::OrthographicCamera::Init(-(int)(gWidth/2), gWidth /2, gHeight/2, -(int)(gHeight/2), 1.0f, -1.0f);
+            util::OrthographicCamera::Init(-(int)(gWidth / 2), gWidth / 2, gHeight / 2, -(int)(gHeight / 2), 1.0f, -1.0f);
             Text::Init();
             util::Audio::Init();
         }
@@ -200,5 +237,5 @@ namespace ds {
             gHeight = height;
             glViewport(0, 0, width, height);
         }
-	}
+    }
 }

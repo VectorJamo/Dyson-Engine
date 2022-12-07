@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-#include <core.h>
+#include "../core.h"
 
 namespace ds {
 	namespace graphics {
@@ -15,7 +15,7 @@ namespace ds {
 			int pWidth, pHeight, pChannels;
 
 		public:
-			Texture(const std::string& filePath);
+			Texture(const char* filePath);
 			Texture(unsigned int width, unsigned int height, unsigned char* pixelData);
 			~Texture();
 

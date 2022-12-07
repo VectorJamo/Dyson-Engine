@@ -7,19 +7,19 @@
 namespace ds {
     namespace graphics {
         Shader* Sprite::pShader = nullptr;
-         Sprite::Sprite(int x, int y, int width, int height)
-            :pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr)
+        Sprite::Sprite(float x, float y, float width, float height)
+            :pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr), pTextureUnit(0), pUsesTexture(false)
         {
 #if _DEBUG
             if (!util::OrthographicCamera::IsCameraInitialized())
             {
-               THROW_ERROR("Initialize a camera before rendering anything!");
+                THROW_ERROR("Initialize a camera before rendering anything!");
             }
             else {
                 CreateRect();
             }
 #else 
-             CreateRect();
+            CreateRect();
 #endif
         }
 
@@ -74,7 +74,7 @@ namespace ds {
             pVBO2->Unbind();
             pIBO->Unbind();
 
-            SetSize(pSize);
+            SetSize(pSize.x, pSize.y);
             SetColor(maths::vec4(1.0f, 1.0f, 1.0f, 1.0f));
 
             // Create the dummy texture
@@ -89,14 +89,14 @@ namespace ds {
         {
             pVAO->Bind();
             pShader->Bind();
-          
+
             pShader->SetUniformMat4f("uModelScale", pScale);
             pShader->SetUniformMat4f("uModelRotation", pRotation);
             pShader->SetUniformMat4f("uModelTranslation", pTranslation);
             pShader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
             pShader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
             pShader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
-          
+
             pTexture->Bind(0);
             pShader->SetUniform1i("uTextureUnit", 0);
             pShader->SetUniformVec4f("uColor", pColor);
@@ -116,7 +116,55 @@ namespace ds {
 
         void Sprite::Init()
         {
-            pShader = new Shader("../Engine-Core/src/shaders/sprite_shader/vs.glsl", "../Engine-Core/src/shaders/sprite_shader/fs.glsl");
+
+            const char* vsCode = R"(
+
+                #version 330 core
+                
+                layout(location = 0) in vec2 position;
+                layout(location = 1) in vec2 textCoord;
+                
+                uniform mat4 uModelTranslation;
+                uniform mat4 uModelScale;
+                uniform mat4 uModelRotation;
+                
+                uniform mat4 uCameraTranslation;
+                uniform mat4 uCameraRotation;
+                
+                uniform mat4 uProjection;
+                
+                out vec2 vTextCoord;
+                
+                void main()
+                {
+                	mat4 scale = uModelScale;
+                	mat4 rotation = uModelRotation * uCameraRotation;
+                	mat4 translation = uModelTranslation * uCameraTranslation;
+                
+                	gl_Position =  uProjection * translation * rotation * scale * vec4(position.x, position.y, 0.0f, 1.0f);
+                	vTextCoord = textCoord;
+                }
+
+
+            )";
+
+            const char* fsCode = R"(
+                #version 330 core
+                
+                out vec4 uFragColor;
+                
+                in vec2 vTextCoord;
+                
+                uniform vec4 uColor;
+                uniform sampler2D uTextureUnit;
+                
+                void main()
+                {
+                	uFragColor = uColor * texture(uTextureUnit, vTextCoord);
+                }
+            )";
+
+            pShader = new Shader(vsCode, fsCode, true);
 
 #if _DEBUG
             std::cout << " -> Sprite Rendering System Initialized!" << std::endl;
@@ -130,17 +178,17 @@ namespace ds {
 
         bool Sprite::IsCollided(const Sprite* sprite)
         {
-            int topA = pPosition.y;
-            int bottomA = pPosition.y + pSize.y;
-            int leftA = pPosition.x;
-            int rightA = pPosition.x + pSize.x;
+            float topA = pPosition.y;
+            float bottomA = pPosition.y - pSize.y;
+            float leftA = pPosition.x;
+            float rightA = pPosition.x + pSize.x;
 
-            int topB = sprite->GetPosition().y;
-            int bottomB = sprite->GetPosition().y + sprite->GetSize().y;
-            int leftB = sprite->GetPosition().x;
-            int rightB = sprite->GetPosition().x + sprite->GetSize().x;
+            float topB = sprite->GetPosition().y;
+            float bottomB = sprite->GetPosition().y - sprite->GetSize().y;
+            float leftB = sprite->GetPosition().x;
+            float rightB = sprite->GetPosition().x + sprite->GetSize().x;
 
-            if (topA > bottomB || topB > bottomA || rightA < leftB || rightB < leftA)
+            if (topA < bottomB || topB < bottomA || rightA < leftB || rightB < leftA)
                 return false;
 
             return true;
@@ -148,39 +196,39 @@ namespace ds {
 
         bool Sprite::IsCollided(const Tile* tile)
         {
-            int topA = pPosition.y;
-            int bottomA = pPosition.y + pSize.y;
-            int leftA = pPosition.x;
-            int rightA = pPosition.x + pSize.x;
+            float topA = pPosition.y;
+            float bottomA = pPosition.y - pSize.y;
+            float leftA = pPosition.x;
+            float rightA = pPosition.x + pSize.x;
 
-            int topB = tile->y;
-            int bottomB = tile->y + tile->height;
-            int leftB = tile->x;
-            int rightB = tile->x + tile->width;
+            float topB = tile->y;
+            float bottomB = tile->y - tile->height;
+            float leftB = tile->x;
+            float rightB = tile->x + tile->width;
 
-            if (topA > bottomB || topB > bottomA || rightA < leftB || rightB < leftA)
+            if (topA < bottomB || topB < bottomA || rightA < leftB || rightB < leftA)
                 return false;
 
             return true;
         }
 
-        bool Sprite::IsCollided(const Tile* tile, int& dx, int& dy)
+        bool Sprite::IsCollided(const Tile* tile, float& dx, float& dy)
         {
-            int topA = pPosition.y;
-            int bottomA = pPosition.y + pSize.y;
-            int leftA = pPosition.x;
-            int rightA = pPosition.x + pSize.x;
+            float topA = pPosition.y;
+            float bottomA = pPosition.y - pSize.y;
+            float leftA = pPosition.x;
+            float rightA = pPosition.x + pSize.x;
 
-            int topB = tile->y;
-            int bottomB = tile->y + tile->height;
-            int leftB = tile->x;
-            int rightB = tile->x + tile->width;
+            float topB = tile->y;
+            float bottomB = tile->y - tile->height;
+            float leftB = tile->x;
+            float rightB = tile->x + tile->width;
 
-            if (topA > bottomB || topB > bottomA || rightA < leftB || rightB < leftA)
+            if (topA < bottomB || topB < bottomA || rightA < leftB || rightB < leftA)
                 return false;
 
             // Check in which axis that the collision has happed
-            if (topA + dy > bottomB || topB > bottomA + dy || rightA < leftB || rightB < leftA)
+            if (topA + dy < bottomB || topB < bottomA + dy || rightA < leftB || rightB < leftA)
                 dx = 0;
             else
                 dy = 0;
@@ -197,28 +245,28 @@ namespace ds {
             pColor = { 1.0f, 1.0f, 1.0f, 1.0f };
         }
 
-        void Sprite::SetPosition(const maths::vec2& pos)
+        void Sprite::SetPosition(float x, float y)
         {
-            pPosition = pos;
-            pTranslation = maths::translate(maths::vec3(pos.x + pSize.x / 2, pos.y - pSize.y / 2, 0.0f));
+            pPosition = maths::vec2(x, y);
+            pTranslation = maths::translate(maths::vec3(pPosition.x + pSize.x / 2, pPosition.y - pSize.y / 2, 0.0f));
         }
 
-        void Sprite::SetSize(const maths::vec2& size)
+        void Sprite::SetSize(float width, float height)
         {
-            pSize = size;
-            pScale = maths::scale(maths::vec3(size.x / 2, size.y / 2, 1.0f)); // The size has to be divided by 2 because it is scaled evenly both on right and left
+            pSize = maths::vec2(width, height);
+            pScale = maths::scale(maths::vec3(pSize.x / 2, pSize.y / 2, 1.0f)); // The size has to be divided by 2 because it is scaled evenly both on right and left
 
-            SetPosition(pPosition);
+            SetPosition(pPosition.x, pPosition.y);
         }
 
-        void Sprite::SetRotation(const float& angle)
+        void Sprite::SetRotation(float angle)
         {
             pRotation = maths::rotate(-TO_RADIANS(angle), maths::vec3(0.0f, 0.0f, 1.0f));
         }
 
         void Sprite::SetColor(const maths::vec4& color)
         {
-            if(!pUsesTexture)
+            if (!pUsesTexture)
                 pColor = color;
         }
 

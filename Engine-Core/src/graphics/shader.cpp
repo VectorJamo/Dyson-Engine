@@ -8,12 +8,25 @@
 
 namespace ds {
     namespace graphics {
-        Shader::Shader(const std::string& vsPath, const std::string& fsPath)
+        Shader::Shader(const char* vsPath, const char* fsPath)
             :pShaderProgram(0), pVertexShaderPath(vsPath), pFragmentShaderPath(fsPath), pVertexShaderCode(""), pFragmentShaderCode("")
         {
             pVertexShaderCode = ParseShader(vsPath);
             pFragmentShaderCode = ParseShader(fsPath);
 
+            unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER, pVertexShaderCode);
+            unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER, pFragmentShaderCode);
+
+            pShaderProgram = glCreateProgram();
+            glAttachShader(pShaderProgram, vertexShader);
+            glAttachShader(pShaderProgram, fragmentShader);
+            glLinkProgram(pShaderProgram);
+            glValidateProgram(pShaderProgram);
+        }
+
+        Shader::Shader(const std::string& vsCode, const std::string& fsCode, bool inCode)
+            :pShaderProgram(0), pVertexShaderPath(""), pFragmentShaderPath(""), pVertexShaderCode(vsCode), pFragmentShaderCode(fsCode)
+        {
             unsigned int vertexShader = CompileShader(GL_VERTEX_SHADER, pVertexShaderCode);
             unsigned int fragmentShader = CompileShader(GL_FRAGMENT_SHADER, pFragmentShaderCode);
 
@@ -89,7 +102,7 @@ namespace ds {
             else
                 glUniform1f(location, value);
 #else
-            glUniform1f(location, value);
+            glUniform1f(glGetUniformLocation(pShaderProgram, name), value);
 #endif
         }
         void Shader::SetUniform1i(const char* name, int value)
@@ -101,7 +114,7 @@ namespace ds {
             else
                 glUniform1i(location, value);
 #else
-            glUniform1i(location, value);
+            glUniform1i(glGetUniformLocation(pShaderProgram, name), value);
 #endif
         }
 
@@ -114,7 +127,7 @@ namespace ds {
             else
                 glUniform1iv(location, dataCount, value);
 #else
-            glUniform1iv(location, dataCount, value);
+            glUniform1iv(glGetUniformLocation(pShaderProgram, name), dataCount, value);
 #endif
         }
 
@@ -127,7 +140,7 @@ namespace ds {
             else
                 glUniform2fv(location, 1, &vec.x);
 #else
-            glUniform2fv(location, 1, &vec.x);
+            glUniform2fv(glGetUniformLocation(pShaderProgram, name), 1, &vec.x);
 #endif
         }
 
@@ -140,7 +153,7 @@ namespace ds {
             else
                 glUniform4fv(location, 1, &vec.x);
 #else
-            glUniform4fv(location, 1, &vec.x);
+            glUniform4fv(glGetUniformLocation(pShaderProgram, name), 1, &vec.x);
 #endif
         }
 
@@ -153,7 +166,7 @@ namespace ds {
             else
                 glUniformMatrix4fv(location, 1, GL_TRUE, &matrix[0][0]);
 #else
-            glUniformMatrix4fv(location, 1, GL_TRUE, &matrix[0][0]);
+            glUniformMatrix4fv(glGetUniformLocation(pShaderProgram, name), 1, GL_TRUE, &matrix[0][0]);
 #endif
         }
     }

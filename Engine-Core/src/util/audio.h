@@ -1,9 +1,14 @@
 #pragma once
 
-#include <core.h>
-#include <irrKlang.h>
+#include "../core.h"
 
 #include <iostream>
+
+namespace irrklang
+{
+	extern class ISoundSource;
+	extern class ISound;
+}
 
 namespace ds {
 	namespace util {
@@ -23,7 +28,7 @@ namespace ds {
 			bool pIsMusicBeingPlayed;
 
 		public:
-			Music(const std::string& filePath);
+			Music(const char* filePath);
 			~Music();
 
 			void Play(bool loop);
@@ -42,7 +47,7 @@ namespace ds {
 			irrklang::ISound* pSound;
 
 		public:
-			SoundEffect(const std::string& filePath);
+			SoundEffect(const char* filePath);
 			~SoundEffect();
 
 			void Play();

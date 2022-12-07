@@ -1,10 +1,10 @@
 #pragma once
-#include <core.h>
+#include "../core.h"
 #include <string>
 
-#include <maths/vec/vec2.h>
-#include <maths/vec/vec4.h>
-#include <maths/mat/mat4.h>
+#include "../maths/vec/vec2.h"
+#include "../maths/vec/vec4.h"
+#include "../maths/mat/mat4.h"
 
 namespace ds {
     namespace graphics {
@@ -20,7 +20,8 @@ namespace ds {
             unsigned int CompileShader(unsigned int shaderType, const std::string& shaderCode);
 
         public:
-            Shader(const std::string& vsPath, const std::string& fsPath);
+            Shader(const char* vsPath, const char* fsPath);
+            Shader(const std::string& vsCode, const std::string& fsCode, bool inCode); // <- A pseudo bool to distinguish between two Shader constructors
             ~Shader();
 
             void Bind();

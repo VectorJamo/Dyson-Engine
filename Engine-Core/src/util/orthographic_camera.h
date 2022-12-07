@@ -1,8 +1,8 @@
 #pragma once
 
-#include "maths/vec/vec2.h"
-#include "maths/vec/vec3.h"
-#include "maths/mat/mat4.h"
+#include "../maths/vec/vec2.h"
+#include "../maths/vec/vec3.h"
+#include "../maths/mat/mat4.h"
 
 namespace ds {
 	namespace util {
