@@ -41,6 +41,7 @@ namespace ds {
             void SetVSyncEnabled(bool status);
             void SetSize(int width, int height);
             void SetTitle(const char* title);
+            void SetShouldClose(bool status);
 
             // Getters
             static unsigned int GetWidth();

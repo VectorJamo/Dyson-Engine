@@ -42,4 +42,7 @@ void Game::HandleInput()
 	if (Input::IsKeyPressed(DS_KEY_RIGHT))
 		sprite->SetTexture(block);
 
+	if (Input::IsKeyPressed(DS_KEY_ESCAPE))
+		window->SetShouldClose(true);
+
 }

@@ -160,6 +160,7 @@ namespace ds {
             glfwSwapBuffers(pWindow);
 
             util::Timer::CalculateDeltaTime();
+            util::Input::Update();
         }
 
         void Window::DrawLine(const maths::vec2& point1, const maths::vec2& point2, const maths::vec4 color, int rotationAngle)
@@ -236,6 +237,11 @@ namespace ds {
         void Window::SetTitle(const char* title)
         {
             glfwSetWindowTitle(pWindow, title);
+        }
+
+        void Window::SetShouldClose(bool status)
+        {
+            glfwSetWindowShouldClose(pWindow, status);
         }
 
         unsigned int Window::GetWidth()
