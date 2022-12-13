@@ -33,6 +33,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\fonts\Roboto\Roboto_Specimen_Book.pdf" />
+    <None Include="res\shaders\fs.glsl" />
+    <None Include="res\shaders\vs.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Font Include="res\fonts\Roboto\Roboto-Black.ttf" />

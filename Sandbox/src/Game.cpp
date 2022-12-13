@@ -20,6 +20,9 @@ void Game::Setup()
 	// This runs once in the beginning
 	window->SetTitle("Game Window");
 	window->SetVSyncEnabled(false);
+	
+	// Setup the shader
+	shader = new Shader("res/shaders/vs.glsl", "res/shaders/fs.glsl");
 
 	blue = new Sprite(-400.0f, 300.0f, 100.0f, 100.0f);
 	blue->SetColor(maths::vec4(0.0f, 0.0f, 1.0f, 1.0f));
@@ -37,9 +40,8 @@ void Game::Update()
 		std::cout << "Collided!" << std::endl;
 
 	// Draw
-	blue->Draw();
-	red->Draw();
-	
+	blue->Draw(shader);
+	red->Draw(shader);
 }
 
 void Game::HandleInput()

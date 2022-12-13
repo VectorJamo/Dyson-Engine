@@ -122,6 +122,19 @@ namespace ds {
 
         void Sprite::Draw(Shader* shader)
         {
+            for (int i = 0; i < 4; i++)
+            {
+                // Multiply the vertices with scale, combined rotate(camera and model) and combined translation(camera and model) matrices
+                maths::vec4 vec = ((maths::vec4(initialVertexPos[i].x, initialVertexPos[i].y, 0.0f, 1.0f) * pScale) * pRotation * util::OrthographicCamera::GetCameraRotationMatrix()) * pTranslation * util::OrthographicCamera::GetCameraTranslationMatrix();
+                vertexPos[i] = maths::vec2(vec.x, vec.y); // Store the final position data 
+
+                vec = ((maths::vec4(initialCollideableVertexPos[i].x, initialCollideableVertexPos[i].y, 0.0f, 1.0f) * pScale) * pRotation * util::OrthographicCamera::GetCameraRotationMatrix()) * pTranslation * util::OrthographicCamera::GetCameraTranslationMatrix();
+                collideableVertexPos[i] = maths::vec2(vec.x, vec.y); // Store the final collideable rect position data 
+            }
+
+            // Send the final position data to the gpu
+            pVBO->SendDataIntoRegion(0, sizeof(maths::vec2) * 4, vertexPos);
+
             pVAO->Bind();
             shader->Bind();
 

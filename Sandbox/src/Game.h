@@ -7,6 +7,7 @@ using namespace util;
 class Game : public Application
 {
 private:
+	Shader* shader;
 	Sprite* blue, *red;
 
 	float blueAngle, redAngle;
