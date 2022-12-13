@@ -33,13 +33,13 @@ namespace ds {
 			maths::mat4 pTranslation, pRotation, pScale;
 
 		public:
-			maths::vec2 pVertexPos[4];
-			maths::vec2 pInitialVertexPos[4];
-			maths::vec2 pEdgeNormals[2];
+			maths::vec2 vertexPos[4];
+			maths::vec2 initialVertexPos[4];
+			maths::vec2 edgeNormals[2];
 
-			maths::vec2 pInitialCollideableVertexPos[4];
-			maths::vec2 pCollideableVertexPos[4];
-			float pCollideableX, pCollideableY, pCollideableWidth, pCollideableHeight;
+			maths::vec2 initialCollideableVertexPos[4];
+			maths::vec2 collideableVertexPos[4];
+			float collideableX, collideableY, collideableWidth, collideableHeight;
 
 		private:
 			void CreateRect();
@@ -73,7 +73,7 @@ namespace ds {
 			inline maths::vec2 GetPosition() const { return pPosition; }
 			inline maths::vec2 GetSize() const { return pSize; }
 			inline maths::vec4 GetColor() const { return pColor; }
-			inline maths::vec4 GetCollideableRect() const { return maths::vec4(pCollideableX, pCollideableY, pCollideableWidth, pCollideableHeight); }
+			inline maths::vec4 GetCollideableRect() const { return maths::vec4(collideableX, collideableY, collideableWidth, collideableHeight); }
 		};
 
 		DS void GetProjections(maths::vec2& normal, Sprite* s1, Sprite* s2, float& projMinA, float& projMaxA, float& projMinB, float& projMaxB);
