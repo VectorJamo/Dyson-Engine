@@ -125,7 +125,11 @@ namespace ds {
             pVAO->Bind();
             shader->Bind();
 
+            shader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
+
             pTexture->Bind(0);
+            shader->SetUniform1i("uTextureUnit", 0);
+            shader->SetUniformVec4f("uColor", pColor);
 
             glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
         }
