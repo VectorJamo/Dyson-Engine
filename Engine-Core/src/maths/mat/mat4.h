@@ -47,6 +47,7 @@ namespace ds {
 
 		// Matrix - Vector multiplication
 		DS vec4 operator*(const mat4& mat, const vec4& vec);
+		DS vec4 operator*(const vec4& vec, const mat4& mat);
 
 		// Matrix - Matrix multiplication
 		DS mat4 operator* (const mat4& mat1, const mat4& mat2);

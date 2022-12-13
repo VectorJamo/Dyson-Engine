@@ -113,6 +113,17 @@ namespace ds {
 
 			return newVec;
 		}
+		vec4 operator*(const vec4& vec, const mat4& mat)
+		{
+			vec4 newVec;
+			newVec.x = mat.mat4x4[0][0] * vec.x + mat.mat4x4[0][1] * vec.y + mat.mat4x4[0][2] * vec.z + mat.mat4x4[0][3] * vec.w;
+			newVec.y = mat.mat4x4[1][0] * vec.x + mat.mat4x4[1][1] * vec.y + mat.mat4x4[1][2] * vec.z + mat.mat4x4[1][3] * vec.w;
+			newVec.z = mat.mat4x4[2][0] * vec.x + mat.mat4x4[2][1] * vec.y + mat.mat4x4[2][2] * vec.z + mat.mat4x4[2][3] * vec.w;
+			newVec.w = mat.mat4x4[3][0] * vec.x + mat.mat4x4[3][1] * vec.y + mat.mat4x4[3][2] * vec.z + mat.mat4x4[3][3] * vec.w;
+
+			return newVec;
+		}
+
 
 		// Matrix - Matrix multiplication
 		// This took quit a while to figure out :P

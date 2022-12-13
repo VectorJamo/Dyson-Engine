@@ -6,9 +6,11 @@
 
 namespace ds {
     namespace graphics {
+        
         Shader* Sprite::pShader = nullptr;
         Sprite::Sprite(float x, float y, float width, float height)
-            :pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr), pTextureUnit(0), pUsesTexture(false)
+            :pTexture(nullptr), pPosition(x, y), pSize(width, height), pVAO(nullptr), pVBO(nullptr), pVBO2(nullptr), pIBO(nullptr),
+            pCollideableX(0), pCollideableY(0), pCollideableWidth(width), pCollideableHeight(height), pUsesTexture(false)
         {
 #if _DEBUG
             if (!util::OrthographicCamera::IsCameraInitialized())
@@ -36,13 +38,19 @@ namespace ds {
 
         void Sprite::CreateRect()
         {
-            float positions[8] =
+            using namespace maths;
+            vec2 positions[4] =
             {
-                -1.0f,   1.0f,
-                -1.0f,  -1.0f,
-                 1.0f,  -1.0f,
-                 1.0f,   1.0f
+                vec2(-1.0f,  1.0f),
+                vec2(-1.0f, -1.0f),
+                vec2( 1.0f, -1.0f),
+                vec2( 1.0f,  1.0f)
             };
+            memcpy(pInitialVertexPos, positions, sizeof(maths::vec2) * 4);
+            memcpy(pVertexPos, positions, sizeof(maths::vec2) * 4);
+            memcpy(pInitialCollideableVertexPos, positions, sizeof(maths::vec2) * 4);
+            memcpy(pCollideableVertexPos, positions, sizeof(maths::vec2) * 4);
+
             float textCoords[8] =
             {
                 0.0f, 1.0f,
@@ -56,7 +64,7 @@ namespace ds {
             };
 
             pVAO = new VertexArray();
-            pVBO = new VertexBuffer(sizeof(float) * 8, positions);
+            pVBO = new VertexBuffer(sizeof(float) * 8, 0);
             pVBO2 = new VertexBuffer(sizeof(float) * 8, textCoords);
             pIBO = new IndexBuffer(sizeof(unsigned char) * 6, indices);
 
@@ -87,14 +95,22 @@ namespace ds {
 
         void Sprite::Draw()
         {
+            for (int i = 0; i < 4; i++)
+            {
+                // Multiply the vertices with scale, combined rotate(camera and model) and combined translation(camera and model) matrices
+                maths::vec4 vec = ((maths::vec4(pInitialVertexPos[i].x, pInitialVertexPos[i].y, 0.0f, 1.0f) * pScale) * pRotation * util::OrthographicCamera::GetCameraRotationMatrix()) * pTranslation * util::OrthographicCamera::GetCameraTranslationMatrix();
+                pVertexPos[i] = maths::vec2(vec.x, vec.y); // Store the final position data 
+
+                vec = ((maths::vec4(pInitialCollideableVertexPos[i].x, pInitialCollideableVertexPos[i].y, 0.0f, 1.0f) * pScale) * pRotation * util::OrthographicCamera::GetCameraRotationMatrix()) * pTranslation * util::OrthographicCamera::GetCameraTranslationMatrix();
+                pCollideableVertexPos[i] = maths::vec2(vec.x, vec.y); // Store the final collideable rect position data 
+            }
+
+            // Send the final position data to the gpu
+            pVBO->SendDataIntoRegion(0, sizeof(maths::vec2) * 4, pVertexPos);
+
             pVAO->Bind();
             pShader->Bind();
 
-            pShader->SetUniformMat4f("uModelScale", pScale);
-            pShader->SetUniformMat4f("uModelRotation", pRotation);
-            pShader->SetUniformMat4f("uModelTranslation", pTranslation);
-            pShader->SetUniformMat4f("uCameraRotation", util::OrthographicCamera::GetCameraRotationMatrix());
-            pShader->SetUniformMat4f("uCameraTranslation", util::OrthographicCamera::GetCameraTranslationMatrix());
             pShader->SetUniformMat4f("uProjection", util::OrthographicCamera::GetProjectionMatrix());
 
             pTexture->Bind(0);
@@ -116,32 +132,20 @@ namespace ds {
 
         void Sprite::Init()
         {
-
             const char* vsCode = R"(
 
                 #version 330 core
                 
                 layout(location = 0) in vec2 position;
                 layout(location = 1) in vec2 textCoord;
-                
-                uniform mat4 uModelTranslation;
-                uniform mat4 uModelScale;
-                uniform mat4 uModelRotation;
-                
-                uniform mat4 uCameraTranslation;
-                uniform mat4 uCameraRotation;
-                
+                                
                 uniform mat4 uProjection;
                 
                 out vec2 vTextCoord;
                 
                 void main()
-                {
-                	mat4 scale = uModelScale;
-                	mat4 rotation = uModelRotation * uCameraRotation;
-                	mat4 translation = uModelTranslation * uCameraTranslation;
-                
-                	gl_Position =  uProjection * translation * rotation * scale * vec4(position.x, position.y, 0.0f, 1.0f);
+                {                
+                	gl_Position = uProjection * vec4(position.x, position.y, 0.0f, 1.0f);
                 	vTextCoord = textCoord;
                 }
 
@@ -178,15 +182,15 @@ namespace ds {
 
         bool Sprite::IsCollided(const Sprite* sprite)
         {
-            float topA = pPosition.y;
-            float bottomA = pPosition.y - pSize.y;
-            float leftA = pPosition.x;
-            float rightA = pPosition.x + pSize.x;
+            float topA = pPosition.y - pCollideableY;
+            float bottomA = topA - pCollideableHeight;
+            float leftA = pPosition.x + pCollideableX;
+            float rightA = leftA + pCollideableWidth;
 
-            float topB = sprite->GetPosition().y;
-            float bottomB = sprite->GetPosition().y - sprite->GetSize().y;
-            float leftB = sprite->GetPosition().x;
-            float rightB = sprite->GetPosition().x + sprite->GetSize().x;
+            float topB = sprite->GetPosition().y - sprite->GetCollideableRect().y;
+            float bottomB = topB - sprite->GetCollideableRect().w;
+            float leftB = sprite->GetPosition().x + sprite->GetCollideableRect().x;
+            float rightB = leftB + sprite->GetCollideableRect().z;
 
             if (topA < bottomB || topB < bottomA || rightA < leftB || rightB < leftA)
                 return false;
@@ -236,6 +240,46 @@ namespace ds {
             return true;
         }
 
+        bool Sprite::CheckCollisisonSAT(Sprite* sprite)
+        {
+            // Calculate the edge normals from the position data for both the quads
+            // Quad 1
+            maths::mat4 rotationMat = maths::rotate(TO_RADIANS(90.0f), maths::vec3(0.0f, 0.0f, 1.0f));
+            
+            maths::vec2 parallelVec = (pVertexPos[3] - pVertexPos[0]).Normalize();
+            maths::vec4 normalVec = maths::vec4(parallelVec.x, parallelVec.y, 0.0f, 1.0f) * rotationMat;
+            pEdgeNormals[0] = maths::vec2(normalVec.x, normalVec.y);
+
+            parallelVec = (pVertexPos[0] - pVertexPos[1]).Normalize();
+            normalVec = maths::vec4(parallelVec.x, parallelVec.y, 0.0f, 1.0f) * rotationMat;
+            pEdgeNormals[1] = maths::vec2(normalVec.x, normalVec.y);
+
+            // Quad 2
+            parallelVec = (sprite->pVertexPos[3] - sprite->pVertexPos[0]).Normalize();
+            normalVec = maths::vec4(parallelVec.x, parallelVec.y, 0.0f, 1.0f) * rotationMat;
+            sprite->pEdgeNormals[0] = maths::vec2(normalVec.x, normalVec.y);
+
+            parallelVec = (sprite->pVertexPos[0] - sprite->pVertexPos[1]).Normalize();
+            normalVec = maths::vec4(parallelVec.x, parallelVec.y, 0.0f, 1.0f) * rotationMat;
+            sprite->pEdgeNormals[1] = maths::vec2(normalVec.x, normalVec.y);
+
+            maths::vec2 normals[4] = { pEdgeNormals[0], pEdgeNormals[1], sprite->pEdgeNormals[0], sprite->pEdgeNormals[1]};
+
+            // Project both quad's vertices onto each the normals
+            float projMinA, projMaxA, projMinB, projMaxB;
+           
+            // Check, for each normal, if any projections do not overlap
+            for (int i = 0; i < 4; i++)
+            {
+                GetProjections(normals[i], this, sprite, projMinA, projMaxA, projMinB, projMaxB);
+                if (!CheckOverlap(projMinA, projMaxA, projMinB, projMaxB))
+                    return false;
+            }
+
+            // If every normal has overlaps in projection then collision exists so return true
+            return true;
+        }
+
         void Sprite::SetTexture(const char* texturePath)
         {
             pUsesTexture = true;
@@ -261,10 +305,28 @@ namespace ds {
 
         void Sprite::SetSize(float width, float height)
         {
+            using namespace maths;
             pSize = maths::vec2(width, height);
             pScale = maths::scale(maths::vec3(pSize.x / 2, pSize.y / 2, 1.0f)); // The size has to be divided by 2 because it is scaled evenly both on right and left
 
             SetPosition(pPosition.x, pPosition.y);
+
+            // Set the collideable rect dimensions
+            maths::vec2 positions[4] =
+            {
+               maths::vec2(pCollideableX,  pCollideableY),
+               maths::vec2(pCollideableX, pCollideableY + pCollideableHeight),
+               maths::vec2(pCollideableX + pCollideableWidth, pCollideableY + pCollideableHeight),
+               maths::vec2(pCollideableX + pCollideableWidth, pCollideableY),
+            };
+
+            mat4 projection = orthographic(0.0f, pSize.x, 0.0, pSize.y, 1.0f, -1.0f);
+
+            for (int i = 0; i < 4; i++)
+            {
+                vec4 pos = vec4(positions[i].x, positions[i].y, 0.0f, 1.0f) * projection;
+                pInitialCollideableVertexPos[i] = vec2(pos.x, pos.y);
+            }
         }
 
         void Sprite::SetRotation(float angle)
@@ -287,10 +349,88 @@ namespace ds {
                        (x + width) / (float)(pTexture->GetWidth())       ,      ((pTexture->GetHeight()) - (y + height)) / ((float)pTexture->GetHeight()),
                        (x + width) / (float)(pTexture->GetWidth())       ,      ((pTexture->GetHeight() - y) / (float)(pTexture->GetHeight())),
             };
-
-            pVBO2->Bind();
             pVBO2->SendDataIntoRegion(0, sizeof(float) * 8, newTextCoords);
-            pVBO2->Unbind();
         }
-    }
+        void Sprite::SetSpriteCollideRect(float x, float y , float width, float height)
+        {
+            pCollideableX = x;
+            pCollideableY = y;
+            pCollideableWidth = width;
+            pCollideableHeight = height;
+
+            // Set the collideable rect dimensions
+            maths::vec2 positions[4] =
+            {
+               maths::vec2(pCollideableX,  pCollideableY),
+               maths::vec2(pCollideableX, pCollideableY + pCollideableHeight),
+               maths::vec2(pCollideableX + pCollideableWidth, pCollideableY + pCollideableHeight),
+               maths::vec2(pCollideableX + pCollideableWidth, pCollideableY),
+            };
+
+            maths::mat4 projection = maths::orthographic(0.0f, pSize.x, 0.0, pSize.y, 1.0f, -1.0f);
+
+            for (int i = 0; i < 4; i++)
+            {
+                maths::vec4 pos = maths::vec4(positions[i].x, positions[i].y, 0.0f, 1.0f) * projection;
+                pInitialCollideableVertexPos[i] = maths::vec2(pos.x, pos.y);
+            }
+
+        }
+     
+        void GetProjections(maths::vec2& normal, Sprite* s1, Sprite* s2, float& projMinA, float& projMaxA, float& projMinB, float& projMaxB)
+        {
+            // Quad 1: Finding projMinA and projMaxA
+            float projections[4];
+            float projMin, projMax;
+
+            for (int i = 0; i < 4; i++) 
+                projections[i] = s1->pCollideableVertexPos[i].Dot(normal);
+
+            // Find the minimum and maximum projections
+            projMin = projections[0];
+            projMax = projections[0];
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (projections[i] < projMin)
+                    projMin = projections[i];
+                else if (projections[i] > projMax)
+                    projMax = projections[i];
+            }
+
+            // Give these projection values to the user
+            projMinA = projMin;
+            projMaxA = projMax;
+        
+            // Quad 2: Finding projMinA and projMaxA
+            for (int i = 0; i < 4; i++)
+                projections[i] = s2->pCollideableVertexPos[i].Dot(normal);
+
+            // Find the minimum and maximum projections
+            projMin = projections[0];
+            projMax = projections[0];
+
+            for (int i = 0; i < 4; i++)
+            {
+                if (projections[i] < projMin)
+                    projMin = projections[i];
+                else if (projections[i] > projMax)
+                    projMax = projections[i];
+            }
+
+            // Give these projection values to the user
+            projMinB = projMin;
+            projMaxB = projMax;
+        }
+        bool CheckOverlap(const float& projMinA, const float& projMaxA, const float& projMinB, const float& projMaxB)
+        {
+            // Check if any projections of A is inside the projections of B
+            if ((projMinA > projMinB && projMinA < projMaxB) || (projMaxA > projMinB && projMaxA < projMaxB))
+                return true;
+            else if ((projMinB > projMinA && projMinB < projMaxA) || (projMaxB > projMinA && projMaxB < projMaxA)) // Check if any projections of B is inside the projections of B
+                return true;
+
+            return false;
+        }
+}
 }

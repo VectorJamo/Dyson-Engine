@@ -24,14 +24,22 @@ namespace ds {
 
 			bool pUsesTexture;
 			Texture* pTexture;
-			unsigned int pTextureUnit;
 
 			// Sprite's transform
 			maths::vec2 pPosition, pSize;
 			maths::vec4 pColor;
 
-			// Sprite's transform matrices
+			// Sprite's transform 
 			maths::mat4 pTranslation, pRotation, pScale;
+
+		public:
+			maths::vec2 pVertexPos[4];
+			maths::vec2 pInitialVertexPos[4];
+			maths::vec2 pEdgeNormals[2];
+
+			maths::vec2 pInitialCollideableVertexPos[4];
+			maths::vec2 pCollideableVertexPos[4];
+			float pCollideableX, pCollideableY, pCollideableWidth, pCollideableHeight;
 
 		private:
 			void CreateRect();
@@ -49,6 +57,7 @@ namespace ds {
 			bool IsCollided(const Sprite* sprite);
 			bool IsCollided(const Tile* tile);
 			bool IsCollided(const Tile* tile, float& dx, float& dy);
+			bool CheckCollisisonSAT(Sprite* sprite);
 
 			// Setters
 			void SetTexture(const char* texturePath);
@@ -58,11 +67,16 @@ namespace ds {
 			void SetRotation(float angle);
 			void SetColor(const maths::vec4& color);
 			void SetTextureClipRect(int x, int y, int width, int height);
+			void SetSpriteCollideRect(float x, float y, float width, float height);
 
 			// Getters
 			inline maths::vec2 GetPosition() const { return pPosition; }
 			inline maths::vec2 GetSize() const { return pSize; }
 			inline maths::vec4 GetColor() const { return pColor; }
+			inline maths::vec4 GetCollideableRect() const { return maths::vec4(pCollideableX, pCollideableY, pCollideableWidth, pCollideableHeight); }
 		};
+
+		DS void GetProjections(maths::vec2& normal, Sprite* s1, Sprite* s2, float& projMinA, float& projMaxA, float& projMinB, float& projMaxB);
+		DS bool CheckOverlap(const float& projMinA, const float& projMaxA, const float& projMinB, const float& projMaxB);
 	}
 }

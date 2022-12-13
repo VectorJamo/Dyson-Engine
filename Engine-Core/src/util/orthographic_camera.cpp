@@ -12,7 +12,7 @@ namespace ds {
 		float OrthographicCamera::pCameraSpeed = 400.0f;
 		float OrthographicCamera::pCameraRotationSpeed = 100.0f;
 		float OrthographicCamera::pZoomFactor = 1.0f;
-		float OrthographicCamera::pZoomIncrement = 100.0f;
+		float OrthographicCamera::pZoomIncrement = 40.0f;
 		float OrthographicCamera::pRotationAngle = 0.0f;
 
 		maths::mat4 OrthographicCamera::pProjectionMatrix;
@@ -67,7 +67,10 @@ namespace ds {
 		{
 			pZoomFactor -= (pZoomIncrement * Timer::GetDeltaTime());
 			if (pZoomFactor <= 0.05f)
+			{
 				pZoomFactor = 0.05f;
+				pProjectionMatrix = maths::orthographic(pCameraBounds.left * pZoomFactor, pCameraBounds.right * pZoomFactor, pCameraBounds.top * pZoomFactor, pCameraBounds.bottom * pZoomFactor, pCameraBounds.zNear, pCameraBounds.zFar);
+			}
 			else
 				pProjectionMatrix = maths::orthographic(pCameraBounds.left * pZoomFactor, pCameraBounds.right * pZoomFactor, pCameraBounds.top * pZoomFactor, pCameraBounds.bottom * pZoomFactor, pCameraBounds.zNear, pCameraBounds.zFar);
 		}
@@ -76,7 +79,10 @@ namespace ds {
 		{
 			pZoomFactor += (pZoomIncrement * Timer::GetDeltaTime());
 			if (pZoomFactor >= 5.0f)
+			{
 				pZoomFactor = 5.0f;
+				pProjectionMatrix = maths::orthographic(pCameraBounds.left * pZoomFactor, pCameraBounds.right * pZoomFactor, pCameraBounds.top * pZoomFactor, pCameraBounds.bottom * pZoomFactor, pCameraBounds.zNear, pCameraBounds.zFar);
+			}
 			else
 				pProjectionMatrix = maths::orthographic(pCameraBounds.left * pZoomFactor, pCameraBounds.right * pZoomFactor, pCameraBounds.top * pZoomFactor, pCameraBounds.bottom * pZoomFactor, pCameraBounds.zNear, pCameraBounds.zFar);
 		}
